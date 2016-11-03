@@ -58,6 +58,7 @@
 		            	merchants_name: "请输入店铺名称",
 		            },
 					submitHandler : function() {
+						curCount = 0;
 						$form.ajaxSubmit({
 							dataType : "json",
 							success : function(data) {

@@ -168,36 +168,36 @@ class merchant extends ecjia_merchant {
 			$this->showmessage('请输入手机号码', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 		}
 		
-		$_SESSION['mobile'] 		= $mobile;
-		$_SESSION['temp_code'] 		= 1234;
-		$_SESSION['temp_code_time'] = RC_Time::gmtime();
-		$this->showmessage('手机验证码发送成功，请注意查收', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS);
+// 		$_SESSION['mobile'] 		= $mobile;
+// 		$_SESSION['temp_code'] 		= 1234;
+// 		$_SESSION['temp_code_time'] = RC_Time::gmtime();
+// 		$this->showmessage('手机验证码发送成功，请注意查收', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS);
 		
-// 		$code = rand(100000, 999999);
-// 		$tpl_name = 'sms_get_validate';
-// 		$tpl = RC_Api::api('sms', 'sms_template', $tpl_name);
+		$code = rand(100000, 999999);
+		$tpl_name = 'sms_get_validate';
+		$tpl = RC_Api::api('sms', 'sms_template', $tpl_name);
 
-// 		if (!empty($tpl)) {
-// 			$this->assign('code', $code);
-// 			$this->assign('service_phone', 	ecjia::config('service_phone'));
-// 			$content = $this->fetch_string($tpl['template_content']);
+		if (!empty($tpl)) {
+			$this->assign('code', $code);
+			$this->assign('service_phone', 	ecjia::config('service_phone'));
+			$content = $this->fetch_string($tpl['template_content']);
 
-// 			$options = array(
-// 				'mobile' 		=> $mobile,
-// 				'msg'			=> $content,
-// 				'template_id' 	=> $tpl['template_id'],
-// 			);
-// 			$response = RC_Api::api('sms', 'sms_send', $options);
+			$options = array(
+				'mobile' 		=> $mobile,
+				'msg'			=> $content,
+				'template_id' 	=> $tpl['template_id'],
+			);
+			$response = RC_Api::api('sms', 'sms_send', $options);
 
-// 			if ($response === true) {
-// 				$_SESSION['mobile'] 	= $mobile;
-// 				$_SESSION['temp_code'] 	= $code;
-// 				$_SESSION['temp_code_time'] = RC_Time::gmtime();
-// 				$this->showmessage('手机验证码发送成功，请注意查收', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS);
-// 			} else {
-// 				$this->showmessage('手机验证码发送失败', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
-// 			}
-// 		};
+			if ($response === true) {
+				$_SESSION['mobile'] 	= $mobile;
+				$_SESSION['temp_code'] 	= $code;
+				$_SESSION['temp_code_time'] = RC_Time::gmtime();
+				$this->showmessage('手机验证码发送成功，请注意查收', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS);
+			} else {
+				$this->showmessage('手机验证码发送失败', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+			}
+		};
 	}
 	
 	public function insert() {

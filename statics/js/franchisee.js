@@ -5,11 +5,11 @@
             //单选框切换事件
             $(document).on('click', 'input[name="validate_type"]', function (e) {
             	if ($("input[name='validate_type']:checked").val() == 1) {
-            		$('.company_info').addClass('hide');
-            		$('.responsible_person').html('负责人姓名：');
+            		$('.company_responsible_person').addClass('hide');
+            		$('.responsible_person').removeClass('hide');
             	} else {
-            		$('.company_info').removeClass('hide');
-            		$('.responsible_person').html('法定代表人姓名：');
+            		$('.company_responsible_person').removeClass('hide');
+            		$('.responsible_person').addClass('hide');
             	}
             });
             $('input[name="validate_type"]:checked').trigger('click');
@@ -35,7 +35,8 @@
             
             //timer处理函数
             function SetRemainTime() {
-	            if (curCount == 0) {                
+            	console.log(curCount);
+	            if (curCount == 0) {     
 	                window.clearInterval(InterValObj);		//停止计时器
 	                $("#mobile").removeAttr("readonly");	//启用按钮
 	                $("#get_code").removeAttr("disabled");	//启用按钮
@@ -46,33 +47,40 @@
 	                $("#get_code").html("重新发送" + curCount + "(s)");
 	            }
 	        };
-         
+	        
             var $form = $("form[name='theForm']");
 			var option = {
-		            rules: {
-		            	mobile: "required",
-		            	merchants_name: "required",
-		            	email: "required",
-		            },
-		            messages: {
-		            	mobile: "请输入手机号码",
-		            	merchants_name: "请输入店铺名称",
-		            	email: "请输入电子邮箱",
-		            },
-					submitHandler : function() {
-						curCount = 0;
-						$form.ajaxSubmit({
-							dataType : "json",
-							success : function(data) {
-								if (data.message == '') {
-									ecjia.pjax(data.url);
-								} else {
-									ecjia.merchant.showmessage(data);
-								}
+	            rules: {
+	            	mobile: "required",
+	            	merchants_name: "required",
+	            	email: "required",
+	            	responsible_person: "required",
+	            	company_responsible_person: "required",
+	            },
+	            messages: {
+	            	mobile: "请输入手机号码",
+	            	merchants_name: "请输入店铺名称",
+	            	email: "请输入电子邮箱",
+	            	responsible_person: "请输入负责人姓名",
+	            	company_responsible_person: "请输入法定代表人姓名",
+	            },
+				submitHandler : function() {
+					$form.ajaxSubmit({
+						dataType : "json",
+						success : function(data) {
+							if (data.status == 'success') {
+								curCount = 0;
 							}
-						});
-					}
+							if (data.message == '') {
+								curCount = 0;
+								ecjia.pjax(data.url);
+							} else {
+								ecjia.merchant.showmessage(data);
+							}
+						}
+					});
 				}
+			}
 			var options = $.extend(ecjia.merchant.defaultOptions.validate, option);
 			$form.validate(options);
 			
@@ -83,18 +91,18 @@
             $('[data-toggle="get-gohash"]').on('click',function(e){
                 e.preventDefault();
                 var province = $('select[name="province"]').val(),
-                    city = $('select[name="city"]').val(),
-                    district = $('select[name="district"]').val(),
-                    address = $('input[name="address"]').val(),
-                    url = $(this).attr('data-url');
+                city = $('select[name="city"]').val(),
+                district = $('select[name="district"]').val(),
+                address = $('input[name="address"]').val(),
+                url = $(this).attr('data-url');
 
-                    var option = {
-                        'province' :　province,
-                        'city' :　city,
-                        'district' :　district,
-                        'address' : address,
-                    }
-                    $.post(url, option, app.franchisee.sethash, "JSON");
+                var option = {
+                    'province' :　province,
+                    'city' :　city,
+                    'district' :　district,
+                    'address' : address,
+                }
+                $.post(url, option, app.franchisee.sethash, "JSON");
             })
         },
 

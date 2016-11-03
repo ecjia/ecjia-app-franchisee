@@ -109,16 +109,27 @@
 							<label for="validate_type_2">企业</label>
                         </div>
                     </div>
-                    <div class="form-group">
-						<label class="control-label responsible_person col-lg-2">{if $info.validate_type eq 1}负责人姓名：{elseif $info.validate_type eq 2}法定代表人信息：{/if}</label>
+                    
+                    <div class="form-group responsible_person">
+						<label class="control-label col-lg-2">负责人姓名：</label>
 						<div class="controls col-lg-6">
 							<input class="form-control" name="responsible_person" type="text" value="{$info.responsible_person}"/>
 						</div>
-					</div>	
+						<span class="input-must">*</span>
+					</div>
+					
+					<div class="form-group company_responsible_person">
+						<label class="control-label col-lg-2">法定代表人信息：</label>
+						<div class="controls col-lg-6">
+							<input class="form-control" name="company_responsible_person" type="text" value="{$info.responsible_person}"/>
+						</div>
+						<span class="input-must">*</span>
+					</div>
+						
 					<div class="form-group">
 						<label class="control-label col-lg-2">电子邮箱：</label>
 						<div class="col-lg-6 controls">
-							<input class="form-control" name="email" type="text"  value="{$info.email}" {if $type eq 'edit_apply'}readonly{/if}/>
+							<input class="form-control" name="email" type="text"  value="{$info.email}"/>
 						</div>
 						<span class="input-must">*</span>
 					</div>
@@ -211,8 +222,9 @@
 					 		<input class="form-control" name="address" type="text" value="{$data.address}"/>
 					 		<div class="help-block">点击获取精确位置显示地图坐标</div>
 						</div>
+						<span class="input-must">*</span>
 						<div class="input-must">
-                     		<button class="btn btn-info small-btn" data-toggle="get-gohash" data-url="{url path='merchant/mh_franchisee/getgeohash'}">获取精准坐标</button>
+                     		<button class="btn btn-info small-btn" data-toggle="get-gohash" data-url="{url path='franchisee/merchant/getgeohash'}">获取精准坐标</button>
                   		</div>
 					</div>
 					

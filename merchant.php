@@ -26,6 +26,8 @@ class merchant extends ecjia_merchant {
 		
 		RC_Loader::load_app_func('functions');
 		assign_adminlog_content();
+		
+		ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here('商家入驻', RC_Uri::url('franchisee/merchant/init')));
 	}
 
 	public function init() {

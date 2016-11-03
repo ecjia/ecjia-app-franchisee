@@ -13,6 +13,7 @@
                 <!-- end dropdown 3 -->
             </ul>
             <ul class="nav navbar-nav navbar-right top-menu">
+            	<a class="ecjiafc-white l_h30" href='{RC_Uri::home_url()}'>返回主页</a>
             </ul>
         </div>
     </nav>

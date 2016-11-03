@@ -1,4 +1,12 @@
-<!-- {extends file="franchisee-merchant.dwt.php"} -->
+<!-- {extends file="ecjia-merchant.dwt.php"} -->
+
+<!-- {block name="common_header"} -->
+<!-- #BeginLibraryItem "/library/franchisee_header.lbi" --><!-- #EndLibraryItem -->
+<!-- {/block} -->      
+        
+<!-- {block name="common_footer"} -->
+<!-- #BeginLibraryItem "/library/franchisee_footer.lbi" --><!-- #EndLibraryItem -->
+<!-- {/block} -->
 
 <!-- {block name="footer"} -->
 <script type="text/javascript">

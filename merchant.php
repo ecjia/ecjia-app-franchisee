@@ -144,6 +144,7 @@ class merchant extends ecjia_merchant {
 			$ur_here = '修改申请';
 		} else {
 			$ur_here = '申请入驻';
+			$this->assign('action_link', array('href' => RC_Uri::url('franchisee/merchant/view'), 'text' => '查询审核进度'));
 		}
 		
 		$this->assign('ur_here', $ur_here);
@@ -205,15 +206,19 @@ class merchant extends ecjia_merchant {
 		$type = !empty($_GET['type']) ? $_GET['type'] : '';
 		
 		if ($step == 1) {
-			$code 	= !empty($_POST['code']) ? $_POST['code'] : '';
+			$code 	= !empty($_POST['code'])   ? $_POST['code'] 		: '';
 			$mobile = !empty($_POST['mobile']) ? trim($_POST['mobile']) : '';
-			
+			$email  = !empty($_POST['email'])  ? trim($_POST['email'])	: '';
 			$time = RC_Time::gmtime() - 6000*3;
+			
+			if (empty($email)) {
+				$this->showmessage('请输入电子邮箱', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+			}
 			
 			$_SESSION['mobile'] 			= $mobile;
 			$_SESSION['validate_type'] 		= !empty($_POST['validate_type']) 		? intval($_POST['validate_type'])		: 1;	//个人1  企业2
 			$_SESSION['responsible_person'] = !empty($_POST['responsible_person']) 	? trim($_POST['responsible_person'])	: '';	//负责人
-			$_SESSION['email']		 		= !empty($_POST['email'])  				? trim($_POST['email'])					: '';	//电子邮箱
+			$_SESSION['email']		 		= $email;	//电子邮箱
 			
 			if (!empty($code) && $code == $_SESSION['temp_code'] && $time < $_SESSION['temp_code_time'] && $mobile == $_SESSION['mobile']) {
 				if ($type != 'edit_apply') {
@@ -225,6 +230,14 @@ class merchant extends ecjia_merchant {
 						$this->showmessage('该手机号正在申请入驻，无法再次申请', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 					} elseif ($count_franchisee != 0) {
 						$this->showmessage('该手机号已申请入驻，无法再次申请', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+					}
+					
+					//判断邮箱是否已存在
+					$count_preaudit_email = RC_DB::table('store_preaudit')->where('email', $email)->count();
+					$count_franchisee_email = RC_DB::table('store_franchisee')->where('email', $email)->count();
+					
+					if ($count_preaudit_email != 0 || $count_franchisee_email != 0) {
+						$this->showmessage('该邮箱已存在', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 					}
 				}
 				if (!empty($type)) {
@@ -262,6 +275,9 @@ class merchant extends ecjia_merchant {
 			$bank_account_number= !empty($_POST['bank_account_number']) ? trim($_POST['bank_account_number']) 	: '';
 			$bank_account_name 	= !empty($_POST['bank_account_name']) 	? trim($_POST['bank_account_name']) 	: '';
 			$bank_address 		= !empty($_POST['bank_address']) 		? trim($_POST['bank_address']) 			: '';
+			
+			$longitude			= !empty($_POST['longitude'])			? $_POST['longitude']					: '';
+			$latitude			= !empty($_POST['latitude'])			? $_POST['latitude']					: '';
 			
 			//判断该手机号是否已申请
 			$count_franchisee = RC_DB::table('store_franchisee')->where('contact_mobile', $contact_mobile)->count();
@@ -390,6 +406,9 @@ class merchant extends ecjia_merchant {
 				
 				'business_licence'  		=> $business_licence,
 				'business_licence_pic' 		=> $business_licence_pic,
+					
+				'longitude'					=> $longitude,
+				'latitude'					=> $latitude,
 			);
 			
 			$this->unset_session();
@@ -419,6 +438,8 @@ class merchant extends ecjia_merchant {
 	
 	public function view() {
 		$this->assign('ur_here', '查看申请进度');
+		$this->assign('action_link', array('href' => RC_Uri::url('franchisee/merchant/init'), 'text' => '申请入驻'));
+		
 		ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here('查看申请进度'));
 		
 		$step = isset($_GET['step']) ? $_GET['step'] : 1;

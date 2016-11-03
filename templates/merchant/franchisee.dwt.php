@@ -12,15 +12,51 @@
 <script type="text/javascript">
 	ecjia.merchant.franchisee.init();
 </script>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=P4C6rokKFWHjXELjOnogw3zbxC0VYubo"></script>
+<script type="text/javascript">
+
+    // 百度地图API功能
+    var step='{$step}';
+    var lng='{$data.longitude}';
+    var lat='{$data.latitude}';
+    if(lng && lat){
+        var map = new BMap.Map("allmap");
+        var point = new BMap.Point(lng, lat);  // 创建点坐标
+        map.centerAndZoom(point,15);
+        var marker = new BMap.Marker(point);  // 创建标注
+    	map.addOverlay(marker);               // 将标注添加到地图中
+        if(step == 1){
+            map.addEventListener("click",function(e){
+                map.removeOverlay(marker);
+                $('input[name="longitude"]').val(e.point.lng)
+                $('input[name="latitude"]').val(e.point.lat)
+                point = new BMap.Point(e.point.lng, e.point.lat);
+                marker = new BMap.Marker(point)
+                map.addOverlay(marker);
+            });
+        }
+    }
+</script>
 <!-- {/block} -->
 
 <!-- {block name="home-content"} -->
-<div class="row">
-    <div class="col-lg-12">
-        <h2 class="page-header">
-        <!-- {if $ur_here}{$ur_here}{/if} -->
-        </h2>
-    </div>
+<div class="alert alert-info">
+	<button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i class="fa fa-times" data-original-title="" title=""></i></button>
+	<strong>温馨提示：</strong>如您的手机号码已申请入驻，可点击右侧查询按钮查询审核进度。
+</div>
+	
+<div class="page-header">
+	<div class="pull-left">
+		<h2><!-- {if $ur_here}{$ur_here}{/if} --></h2>
+  	</div>
+  	<div class="pull-right">
+  		{if $action_link}
+		<a href="{$action_link.href}" class="btn btn-primary data-pjax">
+			<i class="fa fa-search"></i> {$action_link.text}
+		</a>
+		{/if}
+  	</div>
+  	<div class="clearfix"></div>
 </div>
 
 <div class="row">
@@ -86,8 +122,9 @@
 					<div class="form-group">
 						<label class="control-label col-lg-2">电子邮箱：</label>
 						<div class="col-lg-6 controls">
-							<input class="form-control" name="email" type="text"  value="{$info.email}"/>
+							<input class="form-control" name="email" type="text"  value="{$info.email}" {if $type eq 'edit_apply'}readonly{/if}/>
 						</div>
+						<span class="input-must">*</span>
 					</div>
 					<div class="form-group ">
 						<div class="col-lg-6 col-md-offset-2">
@@ -169,14 +206,32 @@
 								</select>
 							</div>
 						</div>
+						<span class="input-must">*</span>
 					</div>
 					
 					<div class="form-group">
-						<label class="control-label col-lg-2">通讯地址：</label>
+						<label class="control-label col-lg-2">详细地址：</label>
 					 	<div class="controls col-lg-6">
 					 		<input class="form-control" name="address" type="text" value="{$data.address}"/>
+					 		<div class="help-block">点击获取精确位置显示地图坐标</div>
 						</div>
+						<div class="input-must">
+                     		<button class="btn btn-info small-btn" data-toggle="get-gohash" data-url="{url path='merchant/mh_franchisee/getgeohash'}">获取精准坐标</button>
+                  		</div>
 					</div>
+					
+                        <div class="form-group localtion-address {if !$data.longitude || !$data.latitude}hide{/if}">
+                            <label class="control-label col-lg-2">店铺精确位置：</label>
+                            <div class="col-lg-6">
+                                <div id="allmap" style="height:320px;"></div>
+                                <div class="help-block">点击选择店铺精确位置，双击放大地图，拖动查看地图其他区域</div>
+                                <div class="help-block">
+                                    <label class="control-label f_l">经纬度：</label>
+                                    <span class="col-lg-4"><input class="form-control required" type="text" readonly name="longitude" value="{$data.longitude}"></span>
+                                    <span class="col-lg-4"><input class="form-control required" type="text" readonly name="latitude" value="{$data.latitude}"></span>
+                                </div>
+                            </div>
+                        </div>				
 					
 	  				<!-- 经营主体信息start -->
 	  				<header class="panel-heading">经营主体信息 <hr></header>
@@ -219,7 +274,6 @@
 					</div>
 					{/if}
 					<!-- 经营主体信息end -->	
-					
 					
 					<header class="panel-heading">证件电子版 <hr></header>
 					<div class="form-group">

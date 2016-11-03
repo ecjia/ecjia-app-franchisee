@@ -35,7 +35,6 @@
             
             //timer处理函数
             function SetRemainTime() {
-            	console.log(curCount);
 	            if (curCount == 0) {     
 	                window.clearInterval(InterValObj);		//停止计时器
 	                $("#mobile").removeAttr("readonly");	//启用按钮

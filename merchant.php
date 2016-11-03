@@ -5,7 +5,6 @@ class merchant extends ecjia_merchant {
 	
 	public function __construct() {
 		parent::__construct();
-		
 		$this->db_region = RC_Loader::load_model('region_model');
 
         RC_Script::enqueue_script('jquery-form');
@@ -31,14 +30,13 @@ class merchant extends ecjia_merchant {
 	}
 
 	public function init() {
-		$step = isset($_GET['step']) ? $_GET['step'] : 1;
-		$type = !empty($_GET['type']) ? trim($_GET['type']) : '';
-		$mobile = !empty($_GET['mobile']) ? trim($_GET['mobile']) : '';
+		$step 	= isset($_GET['step']) 		? $_GET['step'] 		: 1;
+		$type	= !empty($_GET['type']) 	? trim($_GET['type']) 	: '';
+		$mobile = !empty($_GET['mobile']) 	? trim($_GET['mobile']) : '';
 		
 		$data = array();
 		if ($step == 1) {
 			$this->unset_session();
-			
 			if ($type == 'edit_apply') {
 				$data = RC_DB::table('store_preaudit')->where('contact_mobile', $mobile)->first();
 			}
@@ -59,12 +57,7 @@ class merchant extends ecjia_merchant {
 			if ($type == 'edit_apply') {
 				$data = RC_DB::table('store_preaudit')->where('contact_mobile', $mobile)->first();
 			}
-			$province   = $this->db_region->get_regions(1, 1);
-			$city       = $this->db_region->get_regions(2, $data['province']);
-			$district   = $this->db_region->get_regions(3, $data['city']);
-			$this->assign('province', $province);
-			$this->assign('city', $city);
-			$this->assign('district', $district);
+			
 			$data['identity_pic_front']  	= !empty($data['identity_pic_front'])		? RC_Upload::upload_url($data['identity_pic_front']) 		: '';
 			$data['identity_pic_back']    	= !empty($data['identity_pic_back'])		? RC_Upload::upload_url($data['identity_pic_back']) 		: '';
 			$data['personhand_identity_pic']= !empty($data['personhand_identity_pic'])	? RC_Upload::upload_url($data['personhand_identity_pic']) 	: '';
@@ -81,6 +74,7 @@ class merchant extends ecjia_merchant {
 			);
 			$this->assign('certificates_list', $certificates_list);
 			$this->assign('contact_mobile', $_SESSION['mobile']);
+			
 		} elseif ($step == 3) {
 			$this->unset_session(true);
 			$this->assign('edit_apply', RC_Uri::url('franchisee/merchant/init', array('type' => 'edit_apply', 'step' => 1, 'mobile' => $mobile)));
@@ -98,7 +92,7 @@ class merchant extends ecjia_merchant {
 					} elseif ($data['check_status'] == 3) {
 						$message = '<span class="ecjiafc-red">很抱歉，审核未通过，您可以点击右侧按钮修改申请信息</span>';
 						$id = RC_DB::table('store_check_log')->where('store_id', $data['id'])->max('id');
-						$refuse_info = RC_DB::table('store_check_log')->where('id',$id)->first();
+						$refuse_info = RC_DB::table('store_check_log')->where('id', $id)->first();
 						$this->assign('refuse_info', $refuse_info['info']);
 					}
 					$check_log_list = RC_DB::table('store_check_log')->where('store_id', $data['id'])->get();
@@ -133,6 +127,7 @@ class merchant extends ecjia_merchant {
 				$this->showmessage('操作失败', ecjia::MSGTYPE_HTML | ecjia::MSGSTAT_ERROR, array('links' => $links));
 			}
 		}
+		
 		$province   = $this->db_region->get_regions(1, 1);
 		$city       = $this->db_region->get_regions(2, $data['province']);
 		$district   = $this->db_region->get_regions(3, $data['city']);
@@ -191,8 +186,8 @@ class merchant extends ecjia_merchant {
 			$response = RC_Api::api('sms', 'sms_send', $options);
 
 			if ($response === true) {
-				$_SESSION['mobile'] 	= $mobile;
-				$_SESSION['temp_code'] 	= $code;
+				$_SESSION['mobile'] 		= $mobile;
+				$_SESSION['temp_code'] 		= $code;
 				$_SESSION['temp_code_time'] = RC_Time::gmtime();
 				$this->showmessage('手机验证码发送成功，请注意查收', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS);
 			} else {
@@ -268,9 +263,10 @@ class merchant extends ecjia_merchant {
 			$merchants_name 	= !empty($_POST['merchants_name'])  	? trim($_POST['merchants_name'])		: '';			//店铺名称
 			$shop_keyword 		= !empty($_POST['shop_keyword'])  		? trim($_POST['shop_keyword'])			: '';			//店铺名称
 			
-			$validate_type 		= !empty($_SESSION['validate_type']) 		? intval($_SESSION['validate_type'])		: 1;			//个人1  企业2
-			$responsible_person = !empty($_SESSION['responsible_person']) 	? trim($_SESSION['responsible_person'])		: '';			//负责人
-			$email		 		= !empty($_SESSION['email'])  				? trim($_SESSION['email'])					: '';			//电子邮箱
+			$validate_type 		= !empty($_SESSION['validate_type']) 		? intval($_SESSION['validate_type'])		: 1;	//个人1  企业2
+			$responsible_person = !empty($_SESSION['responsible_person']) 	? trim($_SESSION['responsible_person'])		: '';	//负责人
+			$email		 		= !empty($_SESSION['email'])  				? trim($_SESSION['email'])					: '';	//电子邮箱
+			
 			$address			= !empty($_POST['address'])  			? trim($_POST['address'])				: '';			//通讯地址
 			$contact_mobile		= !empty($_POST['contact_mobile'])  	? trim($_POST['contact_mobile'])		: '';			//联系方式
 			
@@ -402,7 +398,7 @@ class merchant extends ecjia_merchant {
 				'province'					=> $province,
 				'city'						=> $city,
 				'district'					=> $district,
-				'address'      				=> $address,		//通讯地址
+				'address'      				=> $address,				//通讯地址
 					
 				'identity_type'     		=> $identity_type,
 				'identity_number'   		=> $identity_number,
@@ -436,7 +432,6 @@ class merchant extends ecjia_merchant {
 				}
 			} else {
 				RC_DB::table('store_preaudit')->update($data);
-				
 				ecjia_merchant::admin_log('店铺名称为：'.$merchants_name.'，'.'联系号码为：'.$mobile, 'edit', 'apply_franchisee');
 				
 // 				if (isset($info['id'])) {

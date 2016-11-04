@@ -446,7 +446,7 @@ class merchant extends ecjia_merchant {
 					$this->showmessage('申请失败', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 				}
 			} else {
-				RC_DB::table('store_preaudit')->update($data);
+				RC_DB::table('store_preaudit')->where('contact_mobile', $mobile)->update($data);
 				ecjia_merchant::admin_log('店铺名称为：'.$merchants_name.'，'.'联系号码为：'.$mobile, 'edit', 'apply_franchisee');
 				
 // 				if (isset($info['id'])) {

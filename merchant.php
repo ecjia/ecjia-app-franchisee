@@ -453,6 +453,7 @@ class merchant extends ecjia_merchant {
                 unset($data['contact_mobile']);	//手机号码不允许修改
 			    if (RC_DB::table('store_preaudit')->where('contact_mobile', $mobile)->where('store_id', 0)->update($data)) {
 			        //审核日志
+			    	$data['contact_mobile'] = $info['contact_mobile'];
 			        $this->add_check_log($data, $info);
 			        
 			        ecjia_merchant::admin_log('店铺名称为：'.$merchants_name.'，'.'联系号码为：'.$mobile, 'edit', 'apply_franchisee');

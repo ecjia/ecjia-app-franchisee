@@ -450,6 +450,7 @@ class merchant extends ecjia_merchant {
 					$this->showmessage('申请失败', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 				}
 			} else {
+                unset($data['contact_mobile']);	//手机号码不允许修改
 			    if (RC_DB::table('store_preaudit')->where('contact_mobile', $mobile)->where('store_id', 0)->update($data)) {
 			        //审核日志
 			        $this->add_check_log($data, $info);
@@ -460,9 +461,7 @@ class merchant extends ecjia_merchant {
 			    } else {
 			        $this->showmessage('修改申请失败', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 			    }
-				
-				
-				
+
 				
 			}
 		}

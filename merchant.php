@@ -461,8 +461,6 @@ class merchant extends ecjia_merchant {
 			    } else {
 			        $this->showmessage('修改申请失败', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 			    }
-
-				
 			}
 		}
 	}
@@ -528,14 +526,20 @@ class merchant extends ecjia_merchant {
 		if (!empty($mobile)) {
 			$store_preaudit_info = RC_DB::table('store_preaudit')->where('contact_mobile', $mobile)->first();
 			if (!empty($store_preaudit_info)) {
-				RC_DB::table('store_preaudit')->where('contact_mobile', $mobile)->delete();
+			    if (RC_DB::table('store_preaudit')->where('contact_mobile', $mobile)->where('store_id', 0)->delete()) {
+			        //清空原来的审核日志
+                    if (isset($store_preaudit_info['id'])) {
+                        RC_DB::table('store_check_log')->where('store_id', $store_preaudit_info['id'])->where('type', 1)->delete();
+                    }
+			        
+			        ecjia_merchant::admin_log('店铺名称为：'.$store_preaudit_info['merchants_name'].'，'.'联系号码为：'.$store_preaudit_info['contact_mobile'], 'cancel', 'apply_franchisee');
+			    }
 				$this->unset_session(true);
 			}
-			ecjia_merchant::admin_log('店铺名称为：'.$store_preaudit_info['merchants_name'].'，'.'联系号码为：'.$store_preaudit_info['contact_mobile'], 'cancel', 'apply_franchisee');
 			
 			$this->showmessage('撤销成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('franchisee/merchant/init')));
 		} else {
-			$this->showmessage('撤销失败', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+			$this->showmessage('手机号码不正确', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 		}
 	}
 	

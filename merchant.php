@@ -322,13 +322,6 @@ class merchant extends ecjia_merchant {
 			}
 			
 			$info = RC_DB::table('store_preaudit')->where('contact_mobile', $mobile)->first();
-			if (!empty($info)) {
-				$old_identity_pic_front 		= $info['identity_pic_front'];
-				$old_identity_pic_back 			= $info['identity_pic_back'];
-				$old_personhand_identity_pic 	= $info['personhand_identity_pic'];
-				$old_business_licence_pic 		= $info['business_licence_pic'];
-			}
-			$identity_pic_front = $identity_pic_back = $personhand_identity_pic = $business_licence_pic = '';
 			
 			$upload = RC_Upload::uploader('image', array('save_path' => 'data/merchant', 'auto_sub_dirs' => false));
 			//证件正面
@@ -338,12 +331,14 @@ class merchant extends ecjia_merchant {
 					$identity_pic_front = $upload->get_position($identity_pic_front_info);
 					
 					//删除旧的
-					if (!empty($old_identity_pic_front)) {
-						$upload->remove($old_identity_pic_front);
+					if (!empty($info['identity_pic_front'])) {
+						$upload->remove($info['identity_pic_front']);
 					}
 				} else {
 					$this->showmessage($upload->error(), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 				}
+			} else {
+				$identity_pic_front = isset($info['identity_pic_front']) ? $info['identity_pic_front'] : '';
 			}
 			
 			//证件反面
@@ -353,12 +348,14 @@ class merchant extends ecjia_merchant {
 					$identity_pic_back = $upload->get_position($identity_pic_back_info);
 					
 					//删除旧的
-					if (!empty($old_identity_pic_back)) {
-						$upload->remove($old_identity_pic_back);
+					if (!empty($info['identity_pic_back'])) {
+						$upload->remove($info['identity_pic_back']);
 					}
 				} else {
 					$this->showmessage($upload->error(), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 				}
+			} else {
+				$identity_pic_back = isset($info['identity_pic_back']) ? $info['identity_pic_back'] : '';
 			}
 			
 			//手持证件
@@ -368,12 +365,14 @@ class merchant extends ecjia_merchant {
 					$personhand_identity_pic = $upload->get_position($personhand_identity_pic_info);
 					
 					//删除旧的
-					if (!empty($old_personhand_identity_pic)) {
-						$upload->remove($old_personhand_identity_pic);
+					if (!empty($info['personhand_identity_pic'])) {
+						$upload->remove($info['personhand_identity_pic']);
 					}
 				} else {
 					$this->showmessage($upload->error(), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 				}
+			} else {
+				$personhand_identity_pic = isset($info['personhand_identity_pic']) ? $info['personhand_identity_pic'] : '';
 			}
 			
 			$company_name = $business_licence = '';
@@ -388,14 +387,19 @@ class merchant extends ecjia_merchant {
 						$business_licence_pic = $upload->get_position($business_licence_pic_info);
 						
 						//删除旧的
-						if (!empty($old_business_licence_pic)) {
-							$upload->remove($old_business_licence_pic);
+						if (!empty($info['business_licence_pic'])) {
+							$upload->remove($info['business_licence_pic']);
 						}
 					} else {
 						$this->showmessage($upload->error(), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 					}
+				} else {
+					$business_licence_pic = isset($info['business_licence_pic']) ? $info['business_licence_pic'] : '';
 				}
+			} else {
+				$business_licence_pic = '';
 			}
+			
 			$data = array(
 				'cat_id'   	   				=> $cat_id,
 				'validate_type'				=> $validate_type,

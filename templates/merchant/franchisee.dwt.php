@@ -1,5 +1,15 @@
 <!-- {extends file="ecjia-merchant.dwt.php"} -->
 
+<!-- {block name="meta"} -->
+<title>
+{if $type eq 'edit_apply'}修改申请{else}商家入驻{/if} - {ecjia::config('shop_name')}
+</title>
+<!-- {/block} -->
+
+<!-- {block name="title"} -->
+{if $type eq 'edit_apply'}修改申请{else}商家入驻{/if} - {ecjia::config('shop_name')}
+<!-- {/block} -->
+
 <!-- {block name="common_header"} -->
 <!-- #BeginLibraryItem "/library/common_nologin_header.lbi" --><!-- #EndLibraryItem -->
 <!-- {/block} -->      
@@ -389,7 +399,7 @@
 		            	<a class="btn btn-info" href="{$edit_apply}">修改申请信息</a>
 		           	{/if}
 		           	{if $remove_apply}
-               			<a class="btn btn-info" data-toggle="ajaxremove" data-msg="您确定要撤销该申请吗？" href="{$remove_apply}">撤销申请</a>
+               			<a class="btn btn-info ajaxremove" data-toggle="ajaxremove" data-msg="您确定要撤销该申请吗？" href="{$remove_apply}">撤销申请</a>
                  	{/if}
                  	</div>
 	                <div class="jumbotron text-center">

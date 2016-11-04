@@ -1,5 +1,15 @@
 <!-- {extends file="ecjia-merchant.dwt.php"} -->
 
+<!-- {block name="meta"} -->
+<title>
+查看审核进度 - {ecjia::config('shop_name')}
+</title>
+<!-- {/block} -->
+
+<!-- {block name="title"} -->
+查看审核进度 - {ecjia::config('shop_name')}
+<!-- {/block} -->
+
 <!-- {block name="common_header"} -->
 <!-- #BeginLibraryItem "/library/common_nologin_header.lbi" --><!-- #EndLibraryItem -->
 <!-- {/block} -->      

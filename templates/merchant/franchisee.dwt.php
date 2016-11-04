@@ -36,10 +36,12 @@
 <!-- {/block} -->
 
 <!-- {block name="home-content"} -->
+{if $step eq 1 && $type neq 'edit_apply'}
 <div class="alert alert-info">
 	<button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i class="fa fa-times" data-original-title="" title=""></i></button>
 	<strong>温馨提示：</strong>如您的手机号码已申请入驻，可点击右侧查询按钮查询审核进度。
 </div>
+{/if}
 	
 <div class="page-header">
 	<div class="pull-left">
@@ -84,14 +86,17 @@
             <div class="panel-body">
 				{if $step eq 1}
 				<form class="cmxform form-horizontal" name="theForm" action="{$form_action}" method="post">
-					{if $status neq 'edit_apply'}
 					<div class="form-group">
 					  	<label class="control-label col-lg-2">手机号码：</label>
 					  	<div class="controls col-lg-6">
 					      	<input class="form-control" name="mobile" id="mobile" placeholder="请输入手机号码" type="text" value="{$info.contact_mobile}" {if $type eq 'edit_apply'}readonly{/if}/>
 					  	</div>
+					  	{if $type neq 'edit_apply'}
 					 	<a class="btn btn-primary" data-url="{url path='franchisee/merchant/get_code_value'}" id="get_code">获取短信验证码</a>
+					 	{/if}
 					</div>
+					
+					{if $type neq 'edit_apply'}
 					<div class="form-group">
 					  	<label class="control-label col-lg-2">{t}短信验证码：{/t}</label>
 					  	<div class="col-lg-6">
@@ -146,12 +151,13 @@
                 	<header class="panel-heading">店铺信息 <hr></header>
                     <div class="form-group">
                         <label for="firstname" class="control-label col-lg-2">店铺分类：</label>
-                        <div class="col-lg-6">
+                        <div class="col-lg-6 controls">
                             <select class="form-control" name="store_cat">
 								<option value="0">请选择...</option>
 								<!-- {html_options options=$cat_list selected=$data.cat_id} -->
 							</select>
                         </div>
+                        <span class="input-must">*</span>
                     </div>
                     
                     <div class="form-group">
@@ -264,6 +270,7 @@
 						<div class="controls col-lg-6">
 							<input class="form-control" name="identity_number" type="text" value="{$data.identity_number}"/>
 						</div>
+						<span class="input-must">*</span>
 					</div>
 					
 					{if $info.validate_type eq 2}

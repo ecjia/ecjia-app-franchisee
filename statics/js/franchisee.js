@@ -40,9 +40,9 @@
 	                $("#mobile").removeAttr("readonly");	//启用按钮
 	                $("#get_code").removeAttr("disabled");	//启用按钮
 	                $("#get_code").html("重新发送验证码");
-	            }
-	            else {
+	            } else {
 	                curCount--;
+	                $("#get_code").attr("disabled", "true");
 	                $("#get_code").html("重新发送" + curCount + "(s)");
 	            }
 	        };
@@ -52,26 +52,36 @@
 	            rules: {
 	            	mobile: "required",
 	            	merchants_name: "required",
-	            	email: "required",
+	                email: {
+	                	required: true,
+	                    email: true
+	              	},
+	              	store_cat: {
+	                    min: 1
+	              	},
 	            	responsible_person: "required",
 	            	company_responsible_person: "required",
+	            	identity_number: "required"
 	            },
 	            messages: {
 	            	mobile: "请输入手机号码",
 	            	merchants_name: "请输入店铺名称",
-	            	email: "请输入电子邮箱",
+	              	store_cat: {
+	                    min: "请选择店铺分类"
+	              	},
+	            	email: {
+	                	required: "请输入电子邮箱",
+	                    email: "请输入一个正确的邮箱",
+	              	},
 	            	responsible_person: "请输入负责人姓名",
 	            	company_responsible_person: "请输入法定代表人姓名",
+	            	identity_number: "请输入证件号码"
 	            },
 				submitHandler : function() {
 					$form.ajaxSubmit({
 						dataType : "json",
 						success : function(data) {
-							if (data.status == 'success') {
-								curCount = 0;
-							}
 							if (data.message == '') {
-								curCount = 0;
 								ecjia.pjax(data.url);
 							} else {
 								ecjia.merchant.showmessage(data);

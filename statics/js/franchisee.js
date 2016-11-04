@@ -59,6 +59,10 @@
 	              	store_cat: {
 	                    min: 1
 	              	},
+	              	district: {
+	                    min: 1
+	              	},
+	              	address: "required",
 	            	responsible_person: "required",
 	            	company_responsible_person: "required",
 	            	identity_number: "required"
@@ -73,6 +77,10 @@
 	                	required: "请输入电子邮箱",
 	                    email: "请输入一个正确的邮箱",
 	              	},
+	              	district: {
+	                    min: "请选择地区"
+	              	},
+	              	address: "请输入详细地址",
 	            	responsible_person: "请输入负责人姓名",
 	            	company_responsible_person: "请输入法定代表人姓名",
 	            	identity_number: "请输入证件号码"

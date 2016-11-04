@@ -717,8 +717,8 @@ class merchant extends ecjia_merchant {
 	                    $store_info[$field_key] = RC_Upload::upload_url($store_info[$field_key]);
 	                    $data[$field_key] = RC_Upload::upload_url($data[$field_key]);
 	                }
-	                $log_original[$field_key] = array('name'=>$field_name, 'value'=> is_null($store_info[$field_key]) ? '<空>' : $store_info[$field_key]);
-	                $log_new[$field_key] = array('name'=>$field_name, 'value'=> is_null($data[$field_key]) ? '<空>' : $data[$field_key]);
+	                $log_original[$field_key] = array('name'=>$field_name, 'value'=> (is_null($store_info[$field_key]) || $store_info[$field_key] == '') ? '<空>' : $store_info[$field_key]);
+	                $log_new[$field_key] = array('name'=>$field_name, 'value'=> (is_null($data[$field_key]) || $data[$field_key] == '') ? '<空>' : $data[$field_key]);
 	            }
 	        }
 	        

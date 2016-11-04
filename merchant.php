@@ -319,6 +319,17 @@ class merchant extends ecjia_merchant {
 			
 			if (empty($merchants_name)) {
 				$this->showmessage('店铺名称不能为空', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+			} else {
+				if ($type == 'edit_apply') {
+					$count_merchants_name = RC_DB::table('store_preaudit')->where('merchants_name', $merchants_name)->where('contact_mobile', '!=', $mobile)->count();
+				} else {
+					$count_merchants_name = RC_DB::table('store_preaudit')->where('merchants_name', $merchants_name)->count();
+				}
+				$count_franchisee_merchant = RC_DB::table('store_franchisee')->where('merchants_name', $merchants_name)->count();
+				
+				if ($count_merchants_name != 0 || $count_franchisee_merchant != 0) {
+					$this->showmessage('店铺名称已存在', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+				}
 			}
 			
 			$info = RC_DB::table('store_preaudit')->where('contact_mobile', $mobile)->first();
@@ -439,7 +450,6 @@ class merchant extends ecjia_merchant {
 			);
 			
 			$this->unset_session();
-			
 			if ($type != 'edit_apply') {
 				$id = RC_DB::table('store_preaudit')->insertGetId($data);
 				
@@ -527,7 +537,6 @@ class merchant extends ecjia_merchant {
 	
 	public function remove_apply() {
 		$mobile = !empty($_GET['mobile']) ? trim($_GET['mobile']) : '';
-		
 		if (!empty($mobile)) {
 			$store_preaudit_info = RC_DB::table('store_preaudit')->where('contact_mobile', $mobile)->first();
 			if (!empty($store_preaudit_info)) {
@@ -536,7 +545,6 @@ class merchant extends ecjia_merchant {
                     if (isset($store_preaudit_info['id'])) {
                         RC_DB::table('store_check_log')->where('store_id', $store_preaudit_info['id'])->where('type', 1)->delete();
                     }
-			        
 			        ecjia_merchant::admin_log('店铺名称为：'.$store_preaudit_info['merchants_name'].'，'.'联系号码为：'.$store_preaudit_info['contact_mobile'], 'cancel', 'apply_franchisee');
 			    }
 				$this->unset_session(true);

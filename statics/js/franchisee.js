@@ -102,6 +102,21 @@
 			$form.validate(options);
 			
 			app.franchisee.gethash();
+			
+			$('.remove_apply').on('click', function() {
+				var $this = $(this),
+					message = $this.attr('data-msg'),
+					url = $this.attr('data-href');
+				if (message != undefined) {
+					smoke.confirm(message, function(e) {
+						if (e) {
+							$.post(url, function(data){
+								ecjia.merchant.showmessage(data);
+							})
+						}
+					}, {ok:"确定", cancel:"取消"});
+				} 
+			});
         },
         
         gethash : function(){

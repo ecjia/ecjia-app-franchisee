@@ -2,12 +2,12 @@
 
 <!-- {block name="meta"} -->
 <title>
-查看审核进度 - {ecjia::config('shop_name')}
+查询审核进度 - {ecjia::config('shop_name')}
 </title>
 <!-- {/block} -->
 
 <!-- {block name="title"} -->
-查看审核进度 - {ecjia::config('shop_name')}
+查询审核进度 - {ecjia::config('shop_name')}
 <!-- {/block} -->
 
 <!-- {block name="common_header"} -->

@@ -110,7 +110,6 @@
 				if (message != undefined) {
 					smoke.confirm(message, function(e) {
 						if (e) {
-							
 							$.post(url, function(data){
 								ecjia.pjax(data.pjaxurl);
 //								ecjia.merchant.showmessage(data);

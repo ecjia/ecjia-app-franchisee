@@ -189,7 +189,7 @@ class merchant extends ecjia_merchant {
 			$response = RC_Api::api('sms', 'sms_send', $options);
 
 			if ($response === true) {
-				$_SESSION['temp_mobile'] 		= $mobile;
+				$_SESSION['temp_mobile']	= $mobile;
 				$_SESSION['temp_code'] 		= $code;
 				$_SESSION['temp_code_time'] = RC_Time::gmtime();
 				$this->showmessage('手机验证码发送成功，请注意查收', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS);
@@ -416,7 +416,7 @@ class merchant extends ecjia_merchant {
 				'validate_type'				=> $validate_type,
 				'merchants_name'   			=> $merchants_name,
 				'shop_keyword'      		=> $shop_keyword,
-// 				'identity_status'			=> $identity_status,		//证件认证状态，0待审核，1审核中，2审核通过，3拒绝通过'
+// 				'identity_status'			=> $identity_status,		//证件认证状态，0待审核，1审核中，2审核通过，3拒绝通过
 				
 				'responsible_person'		=> $responsible_person,
 				'company_name'      		=> $company_name,
@@ -736,12 +736,12 @@ class merchant extends ecjia_merchant {
 	        }
 	        
 	        $log = array(
-	            'store_id' => $store_info['id'],
-	            'type' => 1,
-	            'name' => $data['responsible_person'],
+	            'store_id' 		=> $store_info['id'],
+	            'type' 			=> 1,
+	            'name' 			=> $data['responsible_person'],
 	            'original_data' => serialize($log_original),
-	            'new_data' => serialize($log_new),
-	            'info' => '申请入驻信息修改',
+	            'new_data' 		=> serialize($log_new),
+	            'info' 			=> '申请入驻信息修改',
 	        );
 	    }
 	    

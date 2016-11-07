@@ -110,8 +110,10 @@
 				if (message != undefined) {
 					smoke.confirm(message, function(e) {
 						if (e) {
+							
 							$.post(url, function(data){
-								ecjia.merchant.showmessage(data);
+								ecjia.pjax(data.pjaxurl);
+//								ecjia.merchant.showmessage(data);
 							})
 						}
 					}, {ok:"确定", cancel:"取消"});

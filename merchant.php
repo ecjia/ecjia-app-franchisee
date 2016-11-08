@@ -510,7 +510,7 @@ class merchant extends ecjia_merchant {
 			$code 	= !empty($_POST['code']) ? $_POST['code'] : '';
 			$mobile = !empty($_POST['mobile']) ? trim($_POST['mobile']) : '';
 				
-			$_SESSION['temp_mobile'] = $mobile;
+// 			$_SESSION['temp_mobile'] = $mobile;
 			$time = RC_Time::gmtime() - 6000*3;
 			if (!empty($code) && $code == $_SESSION['temp_code'] && $time < $_SESSION['temp_code_time'] && $mobile == $_SESSION['temp_mobile']) {
 				

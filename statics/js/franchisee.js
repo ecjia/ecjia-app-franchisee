@@ -118,6 +118,10 @@
 					}, {ok:"确定", cancel:"取消"});
 				} 
 			});
+			
+			$(document).on('pjax:end', function() {
+                window.clearInterval(InterValObj);
+			});
         },
         
         gethash : function(){

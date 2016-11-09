@@ -90,8 +90,10 @@ class merchant extends ecjia_merchant {
 					$message = '<span class="ecjiafc-blue">正在审核中，请耐心等待...</span>';
 				} elseif ($data['check_status'] == 3) {
 					$message = '<span class="ecjiafc-red">很抱歉，审核未通过，您可以点击右侧按钮修改申请信息</span>';
+					
 					$id = RC_DB::table('store_check_log')->where('store_id', $data['id'])->max('id');
 					$refuse_info = RC_DB::table('store_check_log')->where('id', $id)->first();
+					
 					$this->assign('refuse_info', $refuse_info['info']);
 				}
 				$check_log_list = RC_DB::table('store_check_log')->where('store_id', $data['id'])->get();
@@ -101,6 +103,7 @@ class merchant extends ecjia_merchant {
 			} else {
 				$data = RC_DB::table('store_franchisee')->where('contact_mobile', $mobile)->first();
 				$message = '<span class="ecjiafc-blue">恭喜您，审核通过</span>';
+				
 				$check_log_list = RC_DB::table('store_check_log')->where('store_id', $data['store_id'])->get();
 			}
 			
@@ -167,10 +170,10 @@ class merchant extends ecjia_merchant {
 			$this->showmessage('请输入手机号码', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 		}
 		
-// 		$_SESSION['temp_mobile'] 	= $mobile;
-// 		$_SESSION['temp_code'] 		= 1234;
-// 		$_SESSION['temp_code_time'] = RC_Time::gmtime();
-// 		$this->showmessage('手机验证码发送成功，请注意查收', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS);
+		$_SESSION['temp_mobile'] 	= $mobile;
+		$_SESSION['temp_code'] 		= 1234;
+		$_SESSION['temp_code_time'] = RC_Time::gmtime();
+		$this->showmessage('手机验证码发送成功，请注意查收', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS);
 		
 		$code = rand(100000, 999999);
 		$tpl_name = 'sms_get_validate';
@@ -255,7 +258,10 @@ class merchant extends ecjia_merchant {
 				}
 				
 				if ($count_preaudit != 0) {
-					$this->showmessage('该手机号正在申请入驻，无法再次申请', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+					$links[] = array('text' => '是我的，查看审核进度', 'href' => RC_Uri::url('franchisee/merchant/init&type=view&step=3&mobile='.$mobile));
+					$links[] = array('text' => '换个手机号重新申请入驻', 'href' => RC_Uri::url('franchisee/merchant/init'));
+					
+					$this->showmessage('该手机号正在申请入驻，请确认该账号是否为你本人所有', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR, array('links' => $links));
 				} elseif ($count_franchisee != 0) {
 					$this->showmessage('该手机号已申请入驻，无法再次申请', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 				}

@@ -170,10 +170,10 @@ class merchant extends ecjia_merchant {
 			$this->showmessage('请输入手机号码', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 		}
 		
-		$_SESSION['temp_mobile'] 	= $mobile;
-		$_SESSION['temp_code'] 		= 1234;
-		$_SESSION['temp_code_time'] = RC_Time::gmtime();
-		$this->showmessage('手机验证码发送成功，请注意查收', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS);
+// 		$_SESSION['temp_mobile'] 	= $mobile;
+// 		$_SESSION['temp_code'] 		= 1234;
+// 		$_SESSION['temp_code_time'] = RC_Time::gmtime();
+// 		$this->showmessage('手机验证码发送成功，请注意查收', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS);
 		
 		$code = rand(100000, 999999);
 		$tpl_name = 'sms_get_validate';
@@ -251,7 +251,14 @@ class merchant extends ecjia_merchant {
 				}
 				
 				if ($count_preaudit != 0) {
-					$links[] = array('text' => '是我的，查看审核进度', 'href' => RC_Uri::url('franchisee/merchant/init&type=view&step=3&mobile='.$mobile));
+					//查询审核信息
+					$count_preaudit_info = RC_DB::table('store_preaudit')->where('contact_mobile', $mobile)->first();
+					if ($count_preaudit_info['check_status'] == 1) {
+						$step = 3;
+					} else {
+						$step = 4;
+					}
+					$links[] = array('text' => '是我的，查看审核进度', 'href' => RC_Uri::url('franchisee/merchant/init&type=view&step='.$step.'&mobile='.$mobile));
 					$links[] = array('text' => '换个手机号重新申请入驻', 'href' => RC_Uri::url('franchisee/merchant/init'));
 						
 					$this->showmessage('该手机号正在申请入驻，请确认该账号是否为你本人所有', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR, array('links' => $links));

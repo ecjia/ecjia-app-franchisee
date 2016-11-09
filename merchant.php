@@ -230,6 +230,7 @@ class merchant extends ecjia_merchant {
 			
 			if ($type == 'edit_apply') {
 				$arr['type'] = $type;
+				
 				//判预审核表邮箱是否已存在
 				$count_preaudit_email = RC_DB::table('store_preaudit')->where('email', $email)->where('contact_mobile', '!=', $mobile)->count();
 				if ($count_preaudit_email != 0) {
@@ -239,8 +240,10 @@ class merchant extends ecjia_merchant {
 				if (empty($code) || $code != $_SESSION['temp_code'] || $time >= $_SESSION['temp_code_time'] || $mobile != $_SESSION['temp_mobile']) {
 					$this->showmessage('请输入正确的手机验证码', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 				}
-				//判断该手机号是否已申请
+				//查询预审核表手机号是否已存在
 				$count_preaudit = RC_DB::table('store_preaudit')->where('contact_mobile', $mobile)->count();
+				
+				//查询商家表手机号是否已存在
 				$count_franchisee = RC_DB::table('store_franchisee')->where('contact_mobile', $mobile)->count();
 				
 				if ($count_preaudit != 0) {
@@ -274,7 +277,9 @@ class merchant extends ecjia_merchant {
 			
 			//判断商家表邮箱是否已存在
 			$count_franchisee_email = RC_DB::table('store_franchisee')->where('email', $email)->count();
-			if ($count_franchisee_email != 0) {
+			//判断员工表邮箱是否存在
+			$count_staff_email = RC_DB::table('staff_user')->where('email', $email)->count();
+			if ($count_franchisee_email != 0 || $count_staff_email != 0) {
 				$this->showmessage('该邮箱已存在', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 			}
 			

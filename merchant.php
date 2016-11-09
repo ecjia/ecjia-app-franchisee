@@ -244,12 +244,6 @@ class merchant extends ecjia_merchant {
 				$count_preaudit = RC_DB::table('store_preaudit')->where('contact_mobile', $mobile)->count();
 				$count_franchisee = RC_DB::table('store_franchisee')->where('contact_mobile', $mobile)->count();
 				
-				//判断邮箱是否已存在
-				$count_preaudit_email = RC_DB::table('store_preaudit')->where('email', $email)->count();
-				if ($count_preaudit_email != 0) {
-					$this->showmessage('该邮箱已存在', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
-				}
-				
 				if ($count_preaudit != 0) {
 					//查询审核信息
 					$count_preaudit_info = RC_DB::table('store_preaudit')->where('contact_mobile', $mobile)->first();

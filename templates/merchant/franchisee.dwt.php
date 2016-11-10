@@ -134,7 +134,7 @@
 					</div>
 					
 					<div class="form-group company_responsible_person">
-						<label class="control-label col-lg-2">法定代表人信息：</label>
+						<label class="control-label col-lg-2">法定代表人姓名：</label>
 						<div class="controls col-lg-6">
 							<input class="form-control" name="company_responsible_person" type="text" value="{$info.responsible_person}"/>
 						</div>

@@ -533,7 +533,7 @@
 		                                   		{if $data.identity_type eq 0}< 还未填写 ></i>{/if}
 		                                        {if $data.identity_type eq 1}身份证{/if}
 		                                        {if $data.identity_type eq 2}护照{/if}
-		                                        {if $data.identity_type eq 3}港澳通行证{/if}
+		                                        {if $data.identity_type eq 3}港澳身份证{/if}
 		                                    </td>
 		                                </tr>
 		                                <tr>
@@ -563,7 +563,7 @@
 		                        <div class="col-md-12">
 		                            <table class="table table-th-block">
 		                                <tr>
-		                                    <td class="active w350" align="right" style="border-top:0px;">公司名称：	</td>
+		                                    <td class="active w350" align="right" style="border-top:0px;">公司名称：</td>
 		                                    <td style="border-top:0px;">{$data.company_name}</td>
 		                                </tr>
 		                                <tr>
@@ -571,7 +571,7 @@
 		                                    <td>{$data.business_licence}</td>
 		                                </tr>
 		                                <tr>
-		                                    <td class="active w350" align="right">营业执照电子版：	</td>
+		                                    <td class="active w350" align="right">营业执照电子版：</td>
 		                                    <td>{if $data.business_licence_pic}<img class="merchant-info-img w200 h120" src="{$data.business_licence_pic}" alt="营业执照"/>{/if}</td>
 		                                </tr>
 		                            </table>

@@ -70,7 +70,7 @@ class merchant extends ecjia_merchant {
 			$certificates_list = array(
 				'1' => '身份证',
 				'2' => '护照',
-				'3' => '港澳通行证',
+				'3' => '港澳身份证',
 			);
 			$this->assign('certificates_list', $certificates_list);
 			$this->assign('contact_mobile', $_SESSION['temp_mobile']);
@@ -742,8 +742,8 @@ class merchant extends ecjia_merchant {
 	                    $store_info[$field_key] = RC_DB::table('store_category')->where('cat_id', $store_info[$field_key])->pluck('cat_name');
 	                    $data[$field_key] = RC_DB::table('store_category')->where('cat_id', $data[$field_key])->pluck('cat_name');
 	                } else if ($field_key == 'identity_type') {
-	                    $store_info[$field_key] = $store_info[$field_key] == 1 ? '身份证' : ($store_info[$field_key] == 2 ? '护照' : '港澳通行证');
-	                    $data[$field_key] = $data[$field_key] == 1 ? '身份证' : ($data[$field_key] == 2 ? '护照' : '港澳通行证');
+	                    $store_info[$field_key] = $store_info[$field_key] == 1 ? '身份证' : ($store_info[$field_key] == 2 ? '护照' : '港澳身份证');
+	                    $data[$field_key] = $data[$field_key] == 1 ? '身份证' : ($data[$field_key] == 2 ? '护照' : '港澳身份证');
 	                } else if ( in_array($field_key, array('province', 'city', 'district'))) {
 	                    $store_info[$field_key] = ecjia_region::instance()->region_name($store_info[$field_key]);
 	                    $data[$field_key] = ecjia_region::instance()->region_name($data[$field_key]);

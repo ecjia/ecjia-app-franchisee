@@ -18,7 +18,7 @@
 <script type="text/javascript">
 	ecjia.merchant.franchisee.init();
 </script>
-<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=P4C6rokKFWHjXELjOnogw3zbxC0VYubo"></script>
+<script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=P4C6rokKFWHjXELjOnogw3zbxC0VYubo"></script>
 <script type="text/javascript">
 
     // 百度地图API功能

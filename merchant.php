@@ -23,8 +23,8 @@ class merchant extends ecjia_merchant {
 		RC_Script::enqueue_script('migrate', RC_App::apps_url('statics/js/migrate.js', __FILE__) , array() , false, true);
 		RC_Script::enqueue_script('region',RC_Uri::admin_url('statics/lib/ecjia-js/ecjia.region.js'));
 		
-		RC_Loader::load_app_func('functions');
-		RC_Loader::load_app_func('check_log', 'franchisee');
+		RC_Loader::load_app_func('check_log');
+		RC_Loader::load_app_func('global');
 		assign_adminlog_content();
 		
 		ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here('商家入驻', RC_Uri::url('franchisee/merchant/init')));
@@ -170,11 +170,6 @@ class merchant extends ecjia_merchant {
 		if (empty($mobile)){
 			return $this->showmessage('请输入手机号码', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 		}
-		
-// 		$_SESSION['temp_mobile'] 	= $mobile;
-// 		$_SESSION['temp_code'] 		= 1234;
-// 		$_SESSION['temp_code_time'] = RC_Time::gmtime();
-// 		return $this->showmessage('手机验证码发送成功，请注意查收', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS);
 		
 		$code = rand(100000, 999999);
 		$tpl_name = 'sms_get_validate';
@@ -531,7 +526,6 @@ class merchant extends ecjia_merchant {
 			$code 	= !empty($_POST['code']) ? $_POST['code'] : '';
 			$mobile = !empty($_POST['mobile']) ? trim($_POST['mobile']) : '';
 				
-// 			$_SESSION['temp_mobile'] = $mobile;
 			$time = RC_Time::gmtime() - 6000*3;
 			if (!empty($code) && $code == $_SESSION['temp_code'] && $time < $_SESSION['temp_code_time'] && $mobile == $_SESSION['temp_mobile']) {
 				//判断该手机号是否已申请

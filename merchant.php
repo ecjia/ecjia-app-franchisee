@@ -23,7 +23,7 @@ class merchant extends ecjia_merchant {
 		RC_Script::enqueue_script('migrate', RC_App::apps_url('statics/js/migrate.js', __FILE__) , array() , false, true);
 		RC_Script::enqueue_script('region',RC_Uri::admin_url('statics/lib/ecjia-js/ecjia.region.js'));
 		
-		RC_Loader::load_app_func('check_log');
+		RC_Loader::load_app_func('merchant_franchisee');
 		RC_Loader::load_app_func('global');
 		assign_adminlog_content();
 		

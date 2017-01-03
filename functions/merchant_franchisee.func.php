@@ -1,4 +1,6 @@
 <?php
+defined('IN_ECJIA') or exit('No permission resources.');
+
 /**
  * 
  * @param array $data 插入更新数据

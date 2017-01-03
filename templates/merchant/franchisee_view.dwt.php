@@ -10,10 +10,6 @@
 查询审核进度 - {ecjia::config('shop_name')}
 <!-- {/block} -->
 
-<!-- {block name="common_header"} -->
-<!-- #BeginLibraryItem "/library/common_nologin_header.lbi" --><!-- #EndLibraryItem -->
-<!-- {/block} -->      
-        
 <!-- {block name="footer"} -->
 <script type="text/javascript">
 	ecjia.merchant.franchisee.init();

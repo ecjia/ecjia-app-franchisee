@@ -7,17 +7,18 @@ defined('IN_ECJIA') or exit('No permission resources.');
  * @param array $store_info 原有信息
  * @param number $insert_id
  */
+ 
 function add_check_log($data, $store_info = array(), $insert_id = 0) {
     //审核日志
     //add
     if ($insert_id && empty($data['store_id'])) {
         $log = array(
-            'store_id' => $insert_id,
-            'type' => 1,
-            'name' => $data['responsible_person'],
-            'original_data' => '',
-            'new_data' => '',
-            'info' => '申请入驻信息第一次提交',
+            'store_id'          => $insert_id,
+            'type'              => 1,
+            'name'              => $data['responsible_person'],
+            'original_data'     => '',
+            'new_data'          => '',
+            'info'              => '申请入驻信息第一次提交',
         );
     } else {
         //edit
@@ -52,19 +53,19 @@ function add_check_log($data, $store_info = array(), $insert_id = 0) {
             if ($store_info[$field_key] != $data[$field_key]) {
                 if ($field_key == 'cat_id') {
                     $store_info[$field_key] = RC_DB::table('store_category')->where('cat_id', $store_info[$field_key])->pluck('cat_name');
-                    $data[$field_key] = RC_DB::table('store_category')->where('cat_id', $data[$field_key])->pluck('cat_name');
+                    $data[$field_key]       = RC_DB::table('store_category')->where('cat_id', $data[$field_key])->pluck('cat_name');
                 } else if ($field_key == 'identity_type') {
-                    $store_info[$field_key] = $store_info[$field_key] == 1 ? '身份证' : ($store_info[$field_key] == 2 ? '护照' : '港澳身份证');
-                    $data[$field_key] = $data[$field_key] == 1 ? '身份证' : ($data[$field_key] == 2 ? '护照' : '港澳身份证');
+                    $store_info[$field_key] = $store_info[$field_key] == 1  ? '身份证' : ($store_info[$field_key] == 2 ? '护照' : '港澳身份证');
+                    $data[$field_key]       = $data[$field_key] == 1        ? '身份证' : ($data[$field_key] == 2       ? '护照' : '港澳身份证');
                 } else if ( in_array($field_key, array('province', 'city', 'district'))) {
                     $store_info[$field_key] = ecjia_region::instance()->region_name($store_info[$field_key]);
-                    $data[$field_key] = ecjia_region::instance()->region_name($data[$field_key]);
+                    $data[$field_key]       = ecjia_region::instance()->region_name($data[$field_key]);
                 } else if ( in_array($field_key, array('identity_pic_front', 'identity_pic_back', 'personhand_identity_pic', 'business_licence_pic'))) {
-                    $store_info[$field_key] = $store_info[$field_key] ? '<图片已删除>' : '<em><空></em>';
-                    $data[$field_key] = $data[$field_key] ? RC_Upload::upload_url($data[$field_key]) : '<em><空></em>';
+                    $store_info[$field_key] = $store_info[$field_key] ? '<图片已删除>'                               : '<em><空></em>';
+                    $data[$field_key]       = $data[$field_key]       ? RC_Upload::upload_url($data[$field_key])  : '<em><空></em>';
                 }
                 $log_original[$field_key] = array('name'=>$field_name, 'value'=> (is_null($store_info[$field_key]) || $store_info[$field_key] == '') ? '<em><空></em>' : $store_info[$field_key]);
-                $log_new[$field_key] = array('name'=>$field_name, 'value'=> (is_null($data[$field_key]) || $data[$field_key] == '') ? '<em><空></em>' : $data[$field_key]);
+                $log_new[$field_key]      = array('name'=>$field_name, 'value'=> (is_null($data[$field_key])       || $data[$field_key] == '')       ? '<em><空></em>' : $data[$field_key]);
             }
         }
          
@@ -80,3 +81,5 @@ function add_check_log($data, $store_info = array(), $insert_id = 0) {
      
     RC_Api::api('store', 'add_check_log', $log);
 }
+
+//end

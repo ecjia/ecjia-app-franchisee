@@ -35,7 +35,7 @@ class merchant extends ecjia_merchant {
 		$type	= !empty($_GET['type']) 	? trim($_GET['type']) 	: '';
 		$mobile = !empty($_GET['mobile']) 	? trim($_GET['mobile']) : '';
 
-		$data = array();
+		$data   = array();
 		if ($step == 1) {
 			$this->unset_session();
 			if ($type == 'edit_apply') {
@@ -90,9 +90,9 @@ class merchant extends ecjia_merchant {
 				if ($data['check_status'] == 1) {
 					$message = '<span class="ecjiafc-blue">正在审核中，请耐心等待...</span>';
 				} elseif ($data['check_status'] == 3) {
-					$message = '<span class="ecjiafc-red">很抱歉，审核未通过，您可以点击右侧按钮修改申请信息</span>';
+					$message     = '<span class="ecjiafc-red">很抱歉，审核未通过，您可以点击右侧按钮修改申请信息</span>';
 					
-					$id = RC_DB::table('store_check_log')->where('store_id', $data['id'])->max('id');
+					$id          = RC_DB::table('store_check_log')->where('store_id', $data['id'])->max('id');
 					$refuse_info = RC_DB::table('store_check_log')->where('id', $id)->first();
 					
 					$this->assign('refuse_info', $refuse_info['info']);
@@ -102,8 +102,8 @@ class merchant extends ecjia_merchant {
 				$this->assign('edit_apply', RC_Uri::url('franchisee/merchant/init', array('type' => 'edit_apply', 'step' => 1, 'mobile' => $mobile)));
 				$this->assign('remove_apply', RC_Uri::url('franchisee/merchant/remove_apply', array('mobile' => $mobile)));
 			} else {
-				$data = RC_DB::table('store_franchisee')->where('contact_mobile', $mobile)->first();
-				$message = '<span class="ecjiafc-blue">恭喜您，审核通过</span>';
+				$data           = RC_DB::table('store_franchisee')->where('contact_mobile', $mobile)->first();
+				$message        = '<span class="ecjiafc-blue">恭喜您，审核通过</span>';
 				
 				$check_log_list = RC_DB::table('store_check_log')->where('store_id', $data['store_id'])->get();
 			}
@@ -158,7 +158,7 @@ class merchant extends ecjia_merchant {
 		if (!empty($type)) {
 			$arr['type'] = $type;
 		}
-		$arr['step'] = $step;
+		$arr['step']   = $step;
 		$arr['mobile'] = $mobile;
 		$this->assign('form_action', RC_Uri::url('franchisee/merchant/insert', $arr));
 		
@@ -171,9 +171,9 @@ class merchant extends ecjia_merchant {
 			return $this->showmessage('请输入手机号码', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 		}
 		
-		$code = rand(100000, 999999);
+		$code     = rand(100000, 999999);
 		$tpl_name = 'sms_get_validate';
-		$tpl = RC_Api::api('sms', 'sms_template', $tpl_name);
+		$tpl      = RC_Api::api('sms', 'sms_template', $tpl_name);
 
 		if (!empty($tpl)) {
 			$this->assign('code', $code);
@@ -284,7 +284,7 @@ class merchant extends ecjia_merchant {
 			$_SESSION['temp_mobile'] 		= $mobile;
 			$_SESSION['email']		 		= $email;			//电子邮箱
 			
-			$arr['step'] = 2;
+			$arr['step']   = 2;
 			$arr['mobile'] = $mobile;
 			return $this->showmessage('', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('url' => RC_Uri::url('franchisee/merchant/init', $arr)));
 			
@@ -319,8 +319,8 @@ class merchant extends ecjia_merchant {
 			
 			//判断该手机号是否已申请
 			$count_franchisee = RC_DB::table('store_franchisee')->where('contact_mobile', $contact_mobile)->count();
-			$count_preaudit = RC_DB::table('store_preaudit')->where('contact_mobile', $contact_mobile)->count();
-			$mobile = !empty($_GET['mobile']) ? trim($_GET['mobile']) : '';
+			$count_preaudit   = RC_DB::table('store_preaudit')->where('contact_mobile', $contact_mobile)->count();
+			$mobile           = !empty($_GET['mobile']) ? trim($_GET['mobile']) : '';
 			
 			if (empty($mobile) || $mobile != $_SESSION['temp_mobile']) {
 				return $this->showmessage('手机号不正确', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
@@ -502,7 +502,7 @@ class merchant extends ecjia_merchant {
 		
 		ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here('查询审核进度'));
 		
-		$step = isset($_GET['step']) ? $_GET['step'] : 1;
+		$step   = isset($_GET['step']) ? $_GET['step'] : 1;
 		$mobile = !empty($_GET['mobile']) ? trim($_GET['mobile']) : '';
 		
 		if ($step != 1) {
@@ -529,7 +529,7 @@ class merchant extends ecjia_merchant {
 			$time = RC_Time::gmtime() - 6000*3;
 			if (!empty($code) && $code == $_SESSION['temp_code'] && $time < $_SESSION['temp_code_time'] && $mobile == $_SESSION['temp_mobile']) {
 				//判断该手机号是否已申请
-				$count_preaudit_info = RC_DB::table('store_preaudit')->where('contact_mobile', $mobile)->first();
+				$count_preaudit_info   = RC_DB::table('store_preaudit')->where('contact_mobile', $mobile)->first();
 				$count_franchisee_info = RC_DB::table('store_franchisee')->where('contact_mobile', $mobile)->first();
 					
 				if (empty($count_preaudit_info) && empty($count_franchisee_info)) {

@@ -2,7 +2,6 @@
 defined('IN_ECJIA') or exit('No permission resources.');
 
 class merchant extends ecjia_merchant {
-	
 	public function __construct() {
 		parent::__construct();
 		$this->db_region = RC_Loader::load_model('region_model');
@@ -11,7 +10,6 @@ class merchant extends ecjia_merchant {
 		RC_Script::enqueue_script('jquery-ui');
         RC_Script::enqueue_script('smoke');
         RC_Style::enqueue_style('uniform-aristo');
-		
         RC_Script::enqueue_script('franchisee', RC_App::apps_url('statics/js/franchisee.js', __FILE__), array(), false, false);
         
 		// input file 长传

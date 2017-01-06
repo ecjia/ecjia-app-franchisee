@@ -2,12 +2,10 @@
 defined('IN_ECJIA') or exit('No permission resources.');
 
 /**
- * 
  * @param array $data 插入更新数据
  * @param array $store_info 原有信息
  * @param number $insert_id
  */
- 
 function add_check_log($data, $store_info = array(), $insert_id = 0) {
     //审核日志
     //add
@@ -62,7 +60,7 @@ function add_check_log($data, $store_info = array(), $insert_id = 0) {
                     $data[$field_key]       = ecjia_region::instance()->region_name($data[$field_key]);
                 } else if ( in_array($field_key, array('identity_pic_front', 'identity_pic_back', 'personhand_identity_pic', 'business_licence_pic'))) {
                     $store_info[$field_key] = $store_info[$field_key] ? '<图片已删除>'                               : '<em><空></em>';
-                    $data[$field_key]       = $data[$field_key]       ? RC_Upload::upload_url($data[$field_key])  : '<em><空></em>';
+                    $data[$field_key]       = $data[$field_key]       ? RC_Upload::upload_url($data[$field_key])  	: '<em><空></em>';
                 }
                 $log_original[$field_key] = array('name'=>$field_name, 'value'=> (is_null($store_info[$field_key]) || $store_info[$field_key] == '') ? '<em><空></em>' : $store_info[$field_key]);
                 $log_new[$field_key]      = array('name'=>$field_name, 'value'=> (is_null($data[$field_key])       || $data[$field_key] == '')       ? '<em><空></em>' : $data[$field_key]);

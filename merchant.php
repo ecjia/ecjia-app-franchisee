@@ -271,8 +271,6 @@ class merchant extends ecjia_merchant {
 				}
 			} else {
 				if (empty($code) || $code != $_SESSION['temp_code'] || $time >= $_SESSION['temp_code_time'] || $mobile != $_SESSION['temp_mobile']) {
-					_dump($_POST);
-					_dump($_SESSION,1);
 					return $this->showmessage('请输入正确的手机验证码', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 				}
 				//查询预审核表手机号是否已存在

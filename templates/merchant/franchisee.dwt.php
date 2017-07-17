@@ -480,7 +480,7 @@
 		                                    <td class="active w350" align="right">{lang key='merchant::merchant.merchant_addres'}：</td>
 		                                    <td>
 		                                        <div id="allmap" style="height:320px;"></div>
-		                                        <div class="help-block">双击放大地图,拖动查看地图其他区域</div>
+		                                        <div class="help-block">双击放大地图，拖动查看地图其他区域</div>
 		                                        <div class="help-block">当前经纬度：{$data.longitude},{$data.latitude}</div>
 		                                    </td>
 		                                </tr>

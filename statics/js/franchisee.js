@@ -133,9 +133,9 @@
 					url = $(this).attr('data-url');
 
 				var option = {
-					'province': 　province,
-					'city': 　city,
-					'district': 　district,
+					'province': province,
+					'city': city,
+					'district': district,
 					'address': address,
 				}
 				$.post(url, option, app.franchisee.sethash, "JSON");

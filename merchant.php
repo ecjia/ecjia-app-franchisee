@@ -384,6 +384,10 @@ class merchant extends ecjia_merchant {
 				}
 			}
 			
+			if (empty($longitude) || empty($latitude)) {
+				return $this->showmessage('请点击获取精准坐标获取店铺经纬度', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+			}
+			
 			$info = RC_DB::table('store_preaudit')->where('contact_mobile', $mobile)->first();
 			
 			$upload = RC_Upload::uploader('image', array('save_path' => 'data/merchant', 'auto_sub_dirs' => false));

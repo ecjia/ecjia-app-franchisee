@@ -252,7 +252,7 @@
                   		</div>
 					</div>
 					
-                        <div class="form-group localtion-address {if !$data.longitude || !$data.latitude}hide{/if}">
+                        <div class="form-group location-address {if !$data.longitude || !$data.latitude}hide{/if}">
                             <label class="control-label col-lg-2">店铺精确位置：</label>
                             <div class="col-lg-6">
                                 <div id="allmap" style="height:320px;"></div>

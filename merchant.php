@@ -206,6 +206,10 @@ class merchant extends ecjia_merchant {
 		$arr['mobile'] = $mobile;
 		$this->assign('form_action', RC_Uri::url('franchisee/merchant/insert', $arr));
 		
+		if (is_ie()) {
+			$browser_warning = '您当前的浏览器版本过低，建议升级您的浏览器或使用chrome内核浏览器！';
+			$this->assign('browser_warning', $browser_warning);
+		}
 		$this->display('franchisee.dwt');
 	}
 	

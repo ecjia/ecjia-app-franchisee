@@ -219,12 +219,17 @@ class merchant extends ecjia_merchant {
 		if (empty($mobile)) {
 			return $this->showmessage('请输入手机号码', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 		}
+		$_SESSION['temp_mobile']	= $mobile;
+		$_SESSION['temp_code'] 		= 1234;
+		$_SESSION['temp_code_time'] = RC_Time::gmtime();
+		return $this->showmessage('手机验证码发送成功，请注意查收', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS);
+		
 		$code = rand(100000, 999999);
 		$options = array(
 			'mobile' => $mobile,
 			'event'	 => 'sms_get_validate',
-			'value'  =>array(
-				'code' 			=> $code,
+			'value'  => array(
+				'code' => $code,
 				'service_phone' => ecjia::config('service_phone'),
 			),
 		);

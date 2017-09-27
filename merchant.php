@@ -75,6 +75,9 @@ class merchant extends ecjia_merchant {
 	}
 
 	public function init() {
+		if (ecjia::config('merchant_join_close') == 1) {
+			return $this->showmessage('抱歉，该网站已关闭入驻商加盟！', ecjia::MSGTYPE_HTML | ecjia::MSGSTAT_ERROR);
+		}
 		$this->unset_login_info();
 		$step 	= isset($_GET['step']) 		? $_GET['step'] 		: 1;
 		$type	= !empty($_GET['type']) 	? trim($_GET['type']) 	: '';
@@ -549,6 +552,10 @@ class merchant extends ecjia_merchant {
 	}
 	
 	public function view() {
+		if (ecjia::config('merchant_join_close') == 1) {
+			return $this->showmessage('抱歉，该网站已关闭入驻商加盟！', ecjia::MSGTYPE_HTML | ecjia::MSGSTAT_ERROR);
+		}
+		
 		$this->unset_login_info();
 		$this->assign('ur_here', '查询审核进度');
 		$this->assign('action_link', array('href' => RC_Uri::url('franchisee/merchant/init'), 'text' => '申请入驻'));

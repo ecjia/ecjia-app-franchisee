@@ -389,7 +389,7 @@ class merchant extends ecjia_merchant {
 					return $this->showmessage('该手机号已申请入驻，无法再次申请', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 				}
 			}
-			
+			 
 			if (empty($merchants_name)) {
 				return $this->showmessage('店铺名称不能为空', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 			} else {

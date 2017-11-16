@@ -353,9 +353,9 @@ class merchant extends ecjia_merchant {
 			$address			= !empty($_POST['address'])  			? trim($_POST['address'])				: '';			//通讯地址
 			$contact_mobile		= !empty($_POST['contact_mobile'])  	? trim($_POST['contact_mobile'])		: '';			//联系方式
 			
-			$province			= !empty($_POST['province'])			? intval($_POST['province'])			: 0;			//省
-			$city				= !empty($_POST['city'])				? intval($_POST['city'])				: 0;			//城市
-			$district			= !empty($_POST['district'])			? intval($_POST['district'])			: 0;			//地区
+			$province			= !empty($_POST['province'])			? trim($_POST['province'])			: '';			//省
+			$city				= !empty($_POST['city'])				? trim($_POST['city'])				: '';			//城市
+			$district			= !empty($_POST['district'])			? trim($_POST['district'])			: '';			//地区
 			
 			$identity_type		= !empty($_POST['identity_type'])		? intval($_POST['identity_type'])		: 1;			//证件类型
 			$identity_number	= !empty($_POST['identity_number'])		? trim($_POST['identity_number'])		: '';			//证件号码
@@ -674,9 +674,9 @@ class merchant extends ecjia_merchant {
 	 * 根据地区获取经纬度
 	 */
 	public function getgeohash(){
-		$shop_province      = !empty($_REQUEST['province'])    ? intval($_REQUEST['province'])           : 0;
-		$shop_city          = !empty($_REQUEST['city'])        ? intval($_REQUEST['city'])               : 0;
-		$shop_district      = !empty($_REQUEST['district'])    ? intval($_REQUEST['district'])           : 0;
+		$shop_province      = !empty($_REQUEST['province'])    ? trim($_REQUEST['province'])             : '';
+		$shop_city          = !empty($_REQUEST['city'])        ? trim($_REQUEST['city'])                 : '';
+		$shop_district      = !empty($_REQUEST['district'])    ? trim($_REQUEST['district'])             : '';
 		$shop_address       = !empty($_REQUEST['address'])     ? htmlspecialchars($_REQUEST['address'])  : '';
 	
 		if (empty($shop_province)) {

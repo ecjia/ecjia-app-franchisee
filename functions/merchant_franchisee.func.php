@@ -102,8 +102,8 @@ function add_check_log($data, $store_info = array(), $insert_id = 0) {
                     $store_info[$field_key] = $store_info[$field_key] == 1  ? '身份证' : ($store_info[$field_key] == 2 ? '护照' : '港澳身份证');
                     $data[$field_key]       = $data[$field_key] == 1        ? '身份证' : ($data[$field_key] == 2       ? '护照' : '港澳身份证');
                 } else if ( in_array($field_key, array('province', 'city', 'district', 'street'))) {
-                    $store_info[$field_key] = ecjia_region::instance()->region_name($store_info[$field_key]);
-                    $data[$field_key]       = ecjia_region::instance()->region_name(trim($data[$field_key]));
+                    $store_info[$field_key] = ecjia_region::getRegionName($store_info[$field_key]);
+                    $data[$field_key]       = ecjia_region::getRegionName(trim($data[$field_key]));
                 } else if ( in_array($field_key, array('identity_pic_front', 'identity_pic_back', 'personhand_identity_pic', 'business_licence_pic'))) {
                     $store_info[$field_key] = $store_info[$field_key] ? '<图片已删除>'                               : '<em><空></em>';
                     $data[$field_key]       = $data[$field_key]       ? RC_Upload::upload_url($data[$field_key])  	: '<em><空></em>';

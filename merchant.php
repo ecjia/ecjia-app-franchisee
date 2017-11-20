@@ -49,7 +49,6 @@ defined('IN_ECJIA') or exit('No permission resources.');
 class merchant extends ecjia_merchant {
 	public function __construct() {
 		parent::__construct();
-		$this->db_region = RC_Loader::load_model('region_model');
 
         RC_Script::enqueue_script('jquery-form');
 		RC_Script::enqueue_script('jquery-ui');
@@ -156,10 +155,10 @@ class merchant extends ecjia_merchant {
 				$check_log_list = RC_DB::table('store_check_log')->where('store_id', $data['store_id'])->get();
 			}
 			
-			$data['province']				= !empty($data['province'])					? $this->get_region_name($data['province']) : '';
-			$data['city']					= !empty($data['city'])						? $this->get_region_name($data['city'])		: '';
-			$data['district']				= !empty($data['district'])					? $this->get_region_name($data['district'])	: '';
-			$data['street']					= !empty($data['street'])					? $this->get_region_name($data['street'])	: '';
+			$data['province']				= !empty($data['province'])					? ecjia_region::getRegionName($data['province']) 			: '';
+			$data['city']					= !empty($data['city'])						? ecjia_region::getRegionName($data['city'])				: '';
+			$data['district']				= !empty($data['district'])					? ecjia_region::getRegionName($data['district'])			: '';
+			$data['street']					= !empty($data['street'])					? ecjia_region::getRegionName($data['street'])				: '';
 			$data['identity_pic_front']  	= !empty($data['identity_pic_front'])		? RC_Upload::upload_url($data['identity_pic_front']) 		: '';
 			$data['identity_pic_back']    	= !empty($data['identity_pic_back'])		? RC_Upload::upload_url($data['identity_pic_back']) 		: '';
 			$data['personhand_identity_pic']= !empty($data['personhand_identity_pic'])	? RC_Upload::upload_url($data['personhand_identity_pic']) 	: '';
@@ -184,10 +183,10 @@ class merchant extends ecjia_merchant {
 			}
 		}
 		
-		$province = with(new Ecjia\App\Setting\Region)->getProvinces(ecjia::config('shop_country'));
-		$city = with(new Ecjia\App\Setting\Region)->getSubarea($data['province']);
-		$district = with(new Ecjia\App\Setting\Region)->getSubarea($data['city']);
-		$street = with(new Ecjia\App\Setting\Region)->getSubarea($data['district']);
+		$province = ecjia_region::getSubarea(ecjia::config('shop_country'));
+		$city = ecjia_region::getSubarea($data['province']);
+		$district = ecjia_region::getSubarea($data['city']);
+		$street = ecjia_region::getSubarea($data['district']);
 		
 		$this->assign('province', $province);
 		$this->assign('city', $city);
@@ -664,18 +663,6 @@ class merchant extends ecjia_merchant {
 	}
 	
 	/**
-	 * 获取指定地区的子级地区
-	 */
-	public function get_region(){
-        $parent_id	= $_GET['parent'];//上级区域编码
-		$arr['regions'] = with(new Ecjia\App\Setting\Region)->getSubarea($parent_id);//传参请求当前国家下信息
-		$arr['target']  = stripslashes(trim($_GET['target']));
-		$arr['target']  = htmlspecialchars($arr['target']);
-
-		echo json_encode($arr);
-	}
-	
-	/**
 	 * 根据地区获取经纬度
 	 */
 	public function getgeohash(){
@@ -704,9 +691,9 @@ class merchant extends ecjia_merchant {
         if (empty($key)) {
         	return $this->showmessage('腾讯地图key不能为空', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         }
-        $province_name  = RC_DB::table('regions')->where('region_id', $shop_province)->pluck('region_name');
-        $district_name 	= RC_DB::table('regions')->where('region_id', $shop_district)->pluck('region_name');
-        $street_name    = RC_DB::table('regions')->where('region_id', $shop_street)->pluck('region_name');
+        $province_name  = ecjia_region::getRegionName($shop_province);
+        $district_name  = ecjia_region::getRegionName($shop_district);
+        $street_name  	= ecjia_region::getRegionName($shop_street);
         
         $address      	= $province_name.$district_name.$street_name.$shop_address;
         $address		= urlencode($address);
@@ -760,13 +747,6 @@ class merchant extends ecjia_merchant {
 				unset($_SESSION['temp_mobile']);
 			}
 		}
-	}
-	
-	/**
-	 * 获取地区名称
-	 */
-	private function get_region_name($id){
-		return RC_DB::table('regions')->where('region_id', $id)->pluck('region_name');
 	}
 	
 	/**

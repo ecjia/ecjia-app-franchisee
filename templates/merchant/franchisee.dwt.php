@@ -218,7 +218,7 @@
 						<label class="control-label col-lg-2">选择地区：</label>
 						<div class="controls">
 							<div class="w120 f_l m_l15 m_r10">
-								<select class="region-summary-provinces col-lg-12" name="province" id="selProvinces" data-url="{url path='franchisee/merchant/get_region'}" data-toggle="regionSummary" data-type="2" data-target="region-summary-cities">
+								<select class="region-summary-provinces col-lg-12" name="province" id="selProvinces" data-url="{url path='setting/region/init'}" data-toggle="regionSummary" data-type="2" data-target="region-summary-cities">
 									<option value='0'>{lang key='system::system.select_please'}</option>
 									<!-- {foreach from=$province item=region} -->
 									<option value="{$region.region_id}" {if $region.region_id eq $data.province}selected{/if}>{$region.region_name}</option>
@@ -227,7 +227,7 @@
 							</div>
 							
 							<div class="w120 f_l m_r10">
-								<select class="region-summary-cities col-lg-12" name="city" id="selCities" data-url="{url path='franchisee/merchant/get_region'}" data-toggle="regionSummary" data-type="3" data-target="region-summary-district">
+								<select class="region-summary-cities col-lg-12" name="city" id="selCities" data-toggle="regionSummary" data-type="3" data-target="region-summary-district">
 									<option value='0'>{lang key='system::system.select_please'}</option>
 									<!-- {foreach from=$city item=region} -->
 									<option value="{$region.region_id}" {if $region.region_id eq $data.city}selected{/if}>{$region.region_name}</option>
@@ -236,7 +236,7 @@
 							</div>
 							
 							<div class="w120 f_l m_r10">
-								<select class="form-control region-summary-district" id="selDistrict" data-url="{url path='franchisee/merchant/get_region'}" data-toggle="regionSummary" name="district" data-type="4" data-target="region-summary-street">
+								<select class="form-control region-summary-district" id="selDistrict" data-toggle="regionSummary" name="district" data-type="4" data-target="region-summary-street">
 									<option value='0'>{lang key='system::system.select_please'}</option>
 									<!-- {foreach from=$district item=region} -->
 									<option value="{$region.region_id}" {if $region.region_id eq $data.district}selected{/if}>{$region.region_name}</option>

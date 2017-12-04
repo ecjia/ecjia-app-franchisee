@@ -184,14 +184,22 @@ class merchant extends ecjia_merchant {
 		}
 		
 		$province = ecjia_region::getSubarea(ecjia::config('shop_country'));
-		$city = ecjia_region::getSubarea($data['province']);
-		$district = ecjia_region::getSubarea($data['city']);
-		$street = ecjia_region::getSubarea($data['district']);
-		
 		$this->assign('province', $province);
-		$this->assign('city', $city);
-		$this->assign('district', $district);
-		$this->assign('street', $street);
+		
+		if (!empty($data['province'])) {
+			$city = ecjia_region::getSubarea($data['province']);
+			$this->assign('city', $city);
+		}
+		
+		if (!empty($data['city'])) {
+			$district = ecjia_region::getSubarea($data['city']);
+			$this->assign('district', $district);
+		}
+		
+		if (!empty($data['district'])) {
+			$street = ecjia_region::getSubarea($data['district']);
+			$this->assign('street', $street);
+		}
 		
 		if ($type == 'edit_apply') {
 			$ur_here = '修改申请';

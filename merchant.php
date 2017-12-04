@@ -721,6 +721,15 @@ class merchant extends ecjia_merchant {
         return $this->showmessage('', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, $shop_point);
 	}
 	
+	public function get_region() {
+		$parent_id	= $_GET['parent'];//上级区域编码
+		$arr['regions'] = with(new Ecjia\App\Setting\Region)->getSubarea($parent_id);//传参请求当前国家下信息
+		$arr['target']  = stripslashes(trim($_GET['target']));
+		$arr['target']  = htmlspecialchars($arr['target']);
+	
+		echo json_encode($arr);
+	}
+	
 	/**
 	 * 获取店铺分类表
 	 */

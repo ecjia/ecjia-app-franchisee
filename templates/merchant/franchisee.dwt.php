@@ -218,7 +218,7 @@
 						<label class="control-label col-lg-2">选择地区：</label>
 						<div class="controls">
 							<div class="w120 f_l m_l15 m_r10">
-								<select class="region-summary-provinces col-lg-12" name="province" id="selProvinces" data-url="{url path='merchant/region/init'}" data-toggle="regionSummary" data-type="2" data-target="region-summary-cities">
+								<select class="region-summary-provinces col-lg-12" name="province" id="selProvinces" data-url="{url path='franchisee/merchant/get_region'}" data-toggle="regionSummary" data-type="2" data-target="region-summary-cities">
 									<option value='0'>{lang key='system::system.select_please'}</option>
 									<!-- {foreach from=$province item=region} -->
 									<option value="{$region.region_id}" {if $region.region_id eq $data.province}selected{/if}>{$region.region_name}</option>

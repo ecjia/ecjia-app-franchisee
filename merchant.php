@@ -225,9 +225,7 @@ class merchant extends ecjia_merchant {
 			$this->assign('browser_warning', $browser_warning);
 		}
 		
-		if (ecjia_config::has('captcha_style') &&
-		(intval(ecjia::config('captcha')) & CAPTCHA_ADMIN) &&
-		RC_ENV::gd_version() > 0) {
+		if (ecjia_config::has('captcha_style') && intval(ecjia::config('captcha')) && RC_ENV::gd_version() > 0) {
 			$this->assign('check_captcha', true);
 		}
 		$this->display('franchisee.dwt');
@@ -612,7 +610,7 @@ class merchant extends ecjia_merchant {
 		$this->assign('step', $step);
 		$this->assign('form_action', RC_Uri::url('franchisee/merchant/view_post', array('step' => $step, 'mobile' => $mobile)));
 		
-		if (ecjia_config::has('captcha_style') && (intval(ecjia::config('captcha')) & CAPTCHA_ADMIN) && RC_ENV::gd_version() > 0) {
+		if (ecjia_config::has('captcha_style') && intval(ecjia::config('captcha')) && RC_ENV::gd_version() > 0) {
 			$this->assign('check_captcha', true);
 		}
 		

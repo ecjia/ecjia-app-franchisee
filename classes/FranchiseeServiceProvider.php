@@ -2,9 +2,9 @@
 
 namespace Ecjia\App\Franchisee;
 
-use Royalcms\Component\App\AppServiceProvider;
+use Royalcms\Component\App\AppParentServiceProvider;
 
-class FranchiseeServiceProvider extends  AppServiceProvider
+class FranchiseeServiceProvider extends  AppParentServiceProvider
 {
     
     public function boot()

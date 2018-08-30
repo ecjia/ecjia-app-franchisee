@@ -9,7 +9,7 @@ class FranchiseeServiceProvider extends  AppParentServiceProvider
     
     public function boot()
     {
-        $this->package('ecjia/app-franchisee', null, dirname(__DIR__));
+        $this->package('ecjia/app-franchisee');
     }
     
     public function register()

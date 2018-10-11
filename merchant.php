@@ -69,10 +69,18 @@ class merchant extends ecjia_merchant {
 		RC_Loader::load_app_func('merchant_franchisee');
 		Ecjia\App\Franchisee\Helper::assign_adminlog_content();
 		
-		ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here('商家入驻', RC_Uri::url('franchisee/merchant/init')));
+		
+	}
+
+	//商家入驻首页
+	public function index() {
+
+		$this->display('franchisee_index.dwt');
 	}
 
 	public function init() {
+		ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here('商家入驻', RC_Uri::url('franchisee/merchant/init')));
+
 		if (ecjia::config('merchant_join_close') == 1) {
 			return $this->showmessage('抱歉，该网站已关闭入驻商加盟！', ecjia::MSGTYPE_HTML | ecjia::MSGSTAT_ERROR);
 		}
@@ -584,6 +592,8 @@ class merchant extends ecjia_merchant {
 	}
 	
 	public function view() {
+		ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here('商家入驻', RC_Uri::url('franchisee/merchant/init')));
+		
 		if (ecjia::config('merchant_join_close') == 1) {
 			return $this->showmessage('抱歉，该网站已关闭入驻商加盟！', ecjia::MSGTYPE_HTML | ecjia::MSGSTAT_ERROR);
 		}

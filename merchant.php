@@ -139,7 +139,8 @@ class merchant extends ecjia_merchant
 		$article = RC_DB::table('article')
 			->where('article_type', 'system')
 			->where('article_id', $id)
-			->first();
+            ->first();
+        $article['content'] = stripslashes($article['content']);
 		$this->assign('article', $article);	
 
 		ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here($article['title']));

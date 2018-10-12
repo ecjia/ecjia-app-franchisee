@@ -128,6 +128,7 @@
 	</div>
 	{/if}
 
+	{if $shortcutDatas}
 	<div class="sett-section s-section-case">
 		<div class="w w1100">
 			<div class="sett-title">
@@ -138,61 +139,22 @@
 				<span class="yw-tit">SUCCESSFUL CASE</span>
 			</div>
 			<div class="sett-warp">
-				<div class="item item1">
+				<!-- {foreach from=$shortcutDatas key=k item=val} -->
+				<div class="item item{$k+1}">
 					<div class="item-top">
-						<a href="https://www.dscmall.cn/" target="_blank"><img src="https://x.dscmall.cn/storage/data/afficheimg/1490061461513345174.png"></a>
+						<a href="{$val.url}" target="_blank"><img src="{$val.image}" width="120" height="50"></a>
 					</div>
 					<div class="item-bot">
-						<div class="tit">
-							模板堂官方旗舰店
-						</div>
 						<div class="desc">
-							模板堂是国内最专业、最具开发实力的独立电子商务服务与技术提供商，业内首家股交所挂牌企业
+							{$val.text}
 						</div>
 					</div>
 				</div>
-				<div class="item item2">
-					<div class="item-top">
-						<a href="https://www.dscmall.cn/" target="_blank"><img src="https://x.dscmall.cn/storage/data/afficheimg/1489979528200662778.png"></a>
-					</div>
-					<div class="item-bot">
-						<div class="tit">
-							ECJia电商专营店
-						</div>
-						<div class="desc">
-							ECJia为你提供当下多种主流设备的商城开发业务，实现电商领域从移动端到PC端的终极解决方案的全方位布局
-						</div>
-					</div>
-				</div>
-				<div class="item item3">
-					<div class="item-top">
-						<a href="https://www.dscmall.cn/" target="_blank"><img src="https://x.dscmall.cn/storage/data/afficheimg/1489979554533969030.png"></a>
-					</div>
-					<div class="item-bot">
-						<div class="tit">
-							大商创电商系统
-						</div>
-						<div class="desc">
-							在商创网络基于十年的电商架构重构下，打造出了一套可以满足运营商、供货商、采购商、用户分销等，在PC与移动设备上
-						</div>
-					</div>
-				</div>
-				<div class="item item4">
-					<div class="item-top">
-						<a href="https://www.dscmall.cn/" target="_blank"><img src="https://x.dscmall.cn/storage/data/afficheimg/1489979583329456244.png"></a>
-					</div>
-					<div class="item-bot">
-						<div class="tit">
-							ECTouch自营店
-						</div>
-						<div class="desc">
-							ECTouch是上海商创网络科技有限公司推出的一款移动商城网店系统，可以在手机上面卖商品的电子商务软件系统
-						</div>
-					</div>
-				</div>
+				<!-- {/foreach} -->
 			</div>
 		</div>
 	</div>
+	{/if}
 
 	{if $ecjia_merchant_shopinfo_list}
 	<div class="sett-section s-section-help">

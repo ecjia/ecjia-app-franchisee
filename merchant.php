@@ -81,6 +81,13 @@ class merchant extends ecjia_merchant {
 
 		$this->assign('background_url', RC_App::apps_url('statics/images/background.png', __FILE__));
 
+		$shortcutDatas = RC_Api::api('adsense', 'shortcut', [
+			'code'     => 'merchant_franchisee_case',
+			'client'   => Ecjia\App\Adsense\Client::PC,
+			'city_id' => 0
+		]);
+		$this->assign('shortcutDatas', $shortcutDatas);
+
 		$this->display('franchisee_index.dwt');
 	}
 

@@ -30,7 +30,7 @@
 		</div>
 	</div>
 	<div class="sett-section s-section-step">
-		<div class="w w1200">
+		<div class="w w1100">
 			<div class="sett-title">
 				<div class="zw-tit">
 					<h3>入驻流程</h3>
@@ -88,7 +88,7 @@
 
 	{if $cat_list}
 	<div class="sett-section s-section-cate">
-		<div class="w w1200">
+		<div class="w w1100">
 			<div class="sett-title">
 				<div class="zw-tit">
 					<h3>热招类目</h3>
@@ -113,7 +113,7 @@
 	{/if}
 
 	<div class="sett-section s-section-case">
-		<div class="w w1200">
+		<div class="w w1100">
 			<div class="sett-title">
 				<div class="zw-tit">
 					<h3>成功案例</h3>
@@ -178,7 +178,7 @@
 		</div>
 	</div>
 	<div class="sett-section s-section-help">
-		<div class="w w1200">
+		<div class="w w1100">
 			<div class="sett-title">
 				<div class="zw-tit">
 					<h3>常见问题</h3>

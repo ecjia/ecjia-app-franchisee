@@ -25,7 +25,7 @@
         </div>
     </nav>
 </div>
-<div id="header" {if $background_url}style="background-image: url({$background_url});background-size: 100% 100%;"{/if}>
+<div id="header">
     
 </div>
 <!-- {/block} -->

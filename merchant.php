@@ -157,6 +157,27 @@ class merchant extends ecjia_merchant
         if (ecjia::config('merchant_join_close') == 1) {
             return $this->showmessage('抱歉，该网站已关闭入驻商加盟！', ecjia::MSGTYPE_HTML | ecjia::MSGSTAT_ERROR);
         }
+
+        $static_url = RC_App::apps_url('statics/images/', __FILE__);
+        $this->assign('static_url', $static_url);
+        $this->assign('background_url', RC_App::apps_url('statics/images/background.png', __FILE__));
+
+        $shop_logo_url = '';
+        $shop_logo = ecjia::config('shop_logo');
+        $disk = RC_Filesystem::disk();
+        if (!empty($shop_logo) && $disk->exists(RC_Upload::upload_path($shop_logo))) {
+            $shop_logo_url = RC_Upload::upload_url($shop_logo);
+        }
+        $this->assign('shop_logo_url', $shop_logo_url);
+
+        $service_phone = ecjia::config('service_phone');
+        $this->assign('service_phone', $service_phone);
+
+        $article = RC_DB::table('article')
+            ->where('article_type', 'system')
+            ->get();
+        $this->assign('data', $article);
+
         $this->unset_login_info();
         $step = isset($_GET['step']) ? $_GET['step'] : 1;
         $type = !empty($_GET['type']) ? trim($_GET['type']) : '';
@@ -164,26 +185,6 @@ class merchant extends ecjia_merchant
 
         $data = array();
         if ($step == 1) {
-            $static_url = RC_App::apps_url('statics/images/', __FILE__);
-            $this->assign('static_url', $static_url);
-            $this->assign('background_url', RC_App::apps_url('statics/images/background.png', __FILE__));
-
-            $shop_logo_url = '';
-            $shop_logo = ecjia::config('shop_logo');
-            $disk = RC_Filesystem::disk();
-            if (!empty($shop_logo) && $disk->exists(RC_Upload::upload_path($shop_logo))) {
-                $shop_logo_url = RC_Upload::upload_url($shop_logo);
-            }
-            $this->assign('shop_logo_url', $shop_logo_url);
-
-            $service_phone = ecjia::config('service_phone');
-            $this->assign('service_phone', $service_phone);
-    
-            $article = RC_DB::table('article')
-                ->where('article_type', 'system')
-                ->get();
-            $this->assign('data', $article);
-
             $this->unset_session();
             if ($type == 'edit_apply') {
                 $data = RC_DB::table('store_preaudit')->where('contact_mobile', $mobile)->first();
@@ -688,10 +689,29 @@ class merchant extends ecjia_merchant
     public function view()
     {
         ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here('商家入驻', RC_Uri::url('franchisee/merchant/init')));
-
         if (ecjia::config('merchant_join_close') == 1) {
             return $this->showmessage('抱歉，该网站已关闭入驻商加盟！', ecjia::MSGTYPE_HTML | ecjia::MSGSTAT_ERROR);
         }
+
+        $static_url = RC_App::apps_url('statics/images/', __FILE__);
+        $this->assign('static_url', $static_url);
+        $this->assign('background_url', RC_App::apps_url('statics/images/background.png', __FILE__));
+
+        $shop_logo_url = '';
+        $shop_logo = ecjia::config('shop_logo');
+        $disk = RC_Filesystem::disk();
+        if (!empty($shop_logo) && $disk->exists(RC_Upload::upload_path($shop_logo))) {
+            $shop_logo_url = RC_Upload::upload_url($shop_logo);
+        }
+        $this->assign('shop_logo_url', $shop_logo_url);
+
+        $service_phone = ecjia::config('service_phone');
+        $this->assign('service_phone', $service_phone);
+
+        $article = RC_DB::table('article')
+            ->where('article_type', 'system')
+            ->get();
+        $this->assign('data', $article);
 
         $this->unset_login_info();
         $this->assign('ur_here', '查询审核进度');
@@ -710,26 +730,6 @@ class merchant extends ecjia_merchant
         }
         if ($step == 1) {
             $this->unset_session();
-
-            $static_url = RC_App::apps_url('statics/images/', __FILE__);
-            $this->assign('static_url', $static_url);
-            $this->assign('background_url', RC_App::apps_url('statics/images/background.png', __FILE__));
-
-            $shop_logo_url = '';
-            $shop_logo = ecjia::config('shop_logo');
-            $disk = RC_Filesystem::disk();
-            if (!empty($shop_logo) && $disk->exists(RC_Upload::upload_path($shop_logo))) {
-                $shop_logo_url = RC_Upload::upload_url($shop_logo);
-            }
-            $this->assign('shop_logo_url', $shop_logo_url);
-
-            $service_phone = ecjia::config('service_phone');
-            $this->assign('service_phone', $service_phone);
-    
-            $article = RC_DB::table('article')
-                ->where('article_type', 'system')
-                ->get();
-            $this->assign('data', $article);
         }
         $this->assign('step', $step);
         $this->assign('form_action', RC_Uri::url('franchisee/merchant/view_post', array('step' => $step, 'mobile' => $mobile)));

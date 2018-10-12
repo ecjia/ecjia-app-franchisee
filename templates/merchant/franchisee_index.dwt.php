@@ -99,7 +99,11 @@
 			<div class="sett-warp">
 				<!-- {foreach from=$cat_list item=val} -->
 				<div class="item">
+					{if $val.cat_image eq ''}
+					<i style="background:url({$static_url}cat-icon.png) center center no-repeat;background-size:100%;"></i><span>{$val.cat_name}</span>
+					{else}
 					<i style="background:url({$val.cat_image}) center center no-repeat;background-size:100%;"></i><span>{$val.cat_name}</span>
+					{/if}
 				</div>
 				<!-- {/foreach} -->
 

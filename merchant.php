@@ -76,6 +76,9 @@ class merchant extends ecjia_merchant {
 		$cat_list = $this->get_cat_select_list(true);
 		$this->assign('cat_list', $cat_list);
 
+		$static_url = RC_App::apps_url('statics/images/', __FILE__);
+		$this->assign('static_url', $static_url);
+
 		$this->display('franchisee_index.dwt');
 	}
 

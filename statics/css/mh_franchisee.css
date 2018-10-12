@@ -107,3 +107,5 @@ input[disabled=disabled],input[disabled],input[readonly=readonly],input[readonly
 .s-section-case .item .item-top a{width:250px;height:200px;display:table-cell;vertical-align:middle}
 .s-section-help .item{float:left;width:460px;margin:0 0 30px 40px}
 .nav{z-index:0;background-color:#3498db;font-size:14px}
+
+#header {height: 450px;}

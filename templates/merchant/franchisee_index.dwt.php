@@ -11,7 +11,23 @@
 <!-- {/block} -->
 
 <!-- {block name="common_header"} -->
-<!-- #BeginLibraryItem "/library/common_nologin_header.lbi" --><!-- #EndLibraryItem -->
+<div class="header-top">
+    <nav class="navbar navbar-inverse navbar-static-top" role="navigation" style="margin-bottom: 0">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="{if $shop_title_link}{$shop_title_link}{else}{RC_Uri::url('franchisee/merchant/init')}{/if}"><i class="fa fa-cubes"></i> <strong>{ecjia::config('shop_name')} - {if $shop_title}{$shop_title}{else}商家入驻{/if}</strong></a>
+            </div>
+            <ul class="nav navbar-nav navbar-left top-menu">
+            </ul>
+            <ul class="nav navbar-nav navbar-right top-menu">
+            	<a class="ecjiafc-white l_h30" href='{RC_Uri::home_url()}'><i class="fa fa-reply"></i> 网站首页</a>
+            </ul>
+        </div>
+    </nav>
+</div>
+<div id="header" {if $background_url}style="background-image: url({$background_url});background-size: 100% 100%;"{/if}>
+    
+</div>
 <!-- {/block} -->
 
 <!-- {block name="home-content"} -->
@@ -24,7 +40,7 @@
 				</div>
 			</div>
 			<div class="s-b-btn">
-				<a href="{RC_Uri::url('franchisee/merchant/index')}" class="im-sett">我要入驻</a>
+				<a href="{RC_Uri::url('franchisee/merchant/join')}" class="im-sett">我要入驻</a>
 				<a href="{RC_Uri::url('franchisee/merchant/view')}" class="view-prog">入驻进度查询</a>
 			</div>
 		</div>
@@ -177,6 +193,8 @@
 			</div>
 		</div>
 	</div>
+
+	{if $ecjia_merchant_shopinfo_list}
 	<div class="sett-section s-section-help">
 		<div class="w w1100">
 			<div class="sett-title">
@@ -187,65 +205,26 @@
 				<span class="yw-tit">COMMON PROBLEM</span>
 			</div>
 			<div class="sett-warp">
-				<div class="item item-right">
+				<!-- {foreach from=$ecjia_merchant_shopinfo_list key=k item=val} -->
+				<div class="item">
 					<div class="number">
-						01
+						{if $k lt 9}0{/if}{$k+1}
 					</div>
 					<div class="info">
 						<div class="name">
 							<div class="tit">
-								<a href="article.php?id=1" target="_blank">免责条款</a>
+								<a target="_blank" href='{url path="merchant/merchant/shopinfo" args="id={$val.article_id}"}'>{$val.title}</a>
 							</div>
 							<div class="desc">
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="item item-left">
-					<div class="number">
-						02
-					</div>
-					<div class="info">
-						<div class="name">
-							<div class="tit">
-								<a href="article.php?id=2" target="_blank">隐私保护</a>
-							</div>
-							<div class="desc">
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="item item-right">
-					<div class="number">
-						03
-					</div>
-					<div class="info">
-						<div class="name">
-							<div class="tit">
-								<a href="article.php?id=3" target="_blank">咨询热点</a>
-							</div>
-							<div class="desc">
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="item item-left">
-					<div class="number">
-						04
-					</div>
-					<div class="info">
-						<div class="name">
-							<div class="tit">
-								<a href="article.php?id=4" target="_blank">联系我们</a>
-							</div>
-							<div class="desc">
-							</div>
-						</div>
-					</div>
-				</div>
+				<!-- {/foreach} -->
 			</div>
 		</div>
 	</div>
+	{/if}
 </div>
 
 {if ecjia::config('stats_code')}

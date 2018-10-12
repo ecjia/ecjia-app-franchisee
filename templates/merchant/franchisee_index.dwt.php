@@ -126,7 +126,7 @@
 				<!-- {foreach from=$shortcutDatas key=k item=val} -->
 				<div class="item item{$k+1}">
 					<div class="item-top">
-						<a href="{$val.url}" target="_blank"><img src="{$val.image}" width="120" height="50"></a>
+						<a href="{$val.url}" target="_blank"><img src="{$val.image}" width="250" height="200"></a>
 					</div>
 					<div class="item-bot">
 						<div class="desc">

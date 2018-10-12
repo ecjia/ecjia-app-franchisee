@@ -10,6 +10,12 @@
 {if $type eq 'edit_apply'}修改申请{else}商家入驻{/if} - {ecjia::config('shop_name')}
 <!-- {/block} -->
 
+{if $step eq 1}
+<!-- {block name="common_header"} -->
+<!-- #BeginLibraryItem "/library/franchisee_nologin_header.lbi" --><!-- #EndLibraryItem -->
+<!-- {/block} -->
+{/if}
+
 <!-- {block name="footer"} -->
 <script type="text/javascript">
 	ecjia.merchant.franchisee.init();

@@ -107,6 +107,8 @@ class merchant extends ecjia_merchant
             ->get();
         $this->assign('data', $data);
 
+        $this->assign('active', true);
+        
         $this->display('franchisee_index.dwt');
     }
 
@@ -130,10 +132,10 @@ class merchant extends ecjia_merchant
         $service_phone = ecjia::config('service_phone');
         $this->assign('service_phone', $service_phone);
 
-        $data = RC_DB::table('article')
+        $article = RC_DB::table('article')
             ->where('article_type', 'system')
             ->get();
-		$this->assign('data', $data);
+		$this->assign('data', $article);
 		
 		$id = intval($_GET['id']);
 		$article = RC_DB::table('article')
@@ -162,6 +164,26 @@ class merchant extends ecjia_merchant
 
         $data = array();
         if ($step == 1) {
+            $static_url = RC_App::apps_url('statics/images/', __FILE__);
+            $this->assign('static_url', $static_url);
+            $this->assign('background_url', RC_App::apps_url('statics/images/background.png', __FILE__));
+
+            $shop_logo_url = '';
+            $shop_logo = ecjia::config('shop_logo');
+            $disk = RC_Filesystem::disk();
+            if (!empty($shop_logo) && $disk->exists(RC_Upload::upload_path($shop_logo))) {
+                $shop_logo_url = RC_Upload::upload_url($shop_logo);
+            }
+            $this->assign('shop_logo_url', $shop_logo_url);
+
+            $service_phone = ecjia::config('service_phone');
+            $this->assign('service_phone', $service_phone);
+    
+            $article = RC_DB::table('article')
+                ->where('article_type', 'system')
+                ->get();
+            $this->assign('data', $article);
+
             $this->unset_session();
             if ($type == 'edit_apply') {
                 $data = RC_DB::table('store_preaudit')->where('contact_mobile', $mobile)->first();
@@ -688,6 +710,26 @@ class merchant extends ecjia_merchant
         }
         if ($step == 1) {
             $this->unset_session();
+
+            $static_url = RC_App::apps_url('statics/images/', __FILE__);
+            $this->assign('static_url', $static_url);
+            $this->assign('background_url', RC_App::apps_url('statics/images/background.png', __FILE__));
+
+            $shop_logo_url = '';
+            $shop_logo = ecjia::config('shop_logo');
+            $disk = RC_Filesystem::disk();
+            if (!empty($shop_logo) && $disk->exists(RC_Upload::upload_path($shop_logo))) {
+                $shop_logo_url = RC_Upload::upload_url($shop_logo);
+            }
+            $this->assign('shop_logo_url', $shop_logo_url);
+
+            $service_phone = ecjia::config('service_phone');
+            $this->assign('service_phone', $service_phone);
+    
+            $article = RC_DB::table('article')
+                ->where('article_type', 'system')
+                ->get();
+            $this->assign('data', $article);
         }
         $this->assign('step', $step);
         $this->assign('form_action', RC_Uri::url('franchisee/merchant/view_post', array('step' => $step, 'mobile' => $mobile)));

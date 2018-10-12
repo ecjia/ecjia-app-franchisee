@@ -11,23 +11,7 @@
 <!-- {/block} -->
 
 <!-- {block name="common_header"} -->
-<div class="header-top">
-    <nav class="navbar navbar-inverse navbar-static-top" role="navigation" style="margin-bottom: 0">
-        <div class="container">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="{if $shop_title_link}{$shop_title_link}{else}{RC_Uri::url('franchisee/merchant/init')}{/if}"><i class="fa fa-cubes"></i> <strong>{ecjia::config('shop_name')} - {if $shop_title}{$shop_title}{else}商家入驻{/if}</strong></a>
-            </div>
-            <ul class="nav navbar-nav navbar-left top-menu">
-            </ul>
-            <ul class="nav navbar-nav navbar-right top-menu">
-            	<a class="ecjiafc-white l_h30" href='{RC_Uri::home_url()}'><i class="fa fa-reply"></i> 网站首页</a>
-            </ul>
-        </div>
-    </nav>
-</div>
-
 <!-- #BeginLibraryItem "/library/franchisee_nologin_header.lbi" --><!-- #EndLibraryItem -->
-
 <!-- {/block} -->
 
 <!-- {block name="home-content"} -->

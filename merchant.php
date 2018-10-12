@@ -62,23 +62,21 @@ class merchant extends ecjia_merchant {
 		
 		// 步骤导航条
 		RC_Style::enqueue_style('bar', RC_App::apps_url('statics/css/bar.css', __FILE__), array());
+		RC_Style::enqueue_style('mh_franchisee', RC_App::apps_url('statics/css/mh_franchisee.css', __FILE__), array());
+
 		RC_Script::enqueue_script('migrate', RC_App::apps_url('statics/js/migrate.js', __FILE__) , array() , false, true);
 		RC_Script::enqueue_script('region',RC_Uri::admin_url('statics/lib/ecjia-js/ecjia.region.js'));
 		RC_Script::enqueue_script('qq_map', 'https://map.qq.com/api/js?v=2.exp');
 		
 		RC_Loader::load_app_func('merchant_franchisee');
 		Ecjia\App\Franchisee\Helper::assign_adminlog_content();
-		
-		
-	}
-
-	//商家入驻首页
-	public function index() {
-
-		$this->display('franchisee_index.dwt');
 	}
 
 	public function init() {
+		$this->display('franchisee_index.dwt');
+	}
+
+	public function index() {
 		ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here('商家入驻', RC_Uri::url('franchisee/merchant/init')));
 
 		if (ecjia::config('merchant_join_close') == 1) {
@@ -132,7 +130,7 @@ class merchant extends ecjia_merchant {
 			
 		} elseif ($step == 3) {
 			$this->unset_session();
-			$this->assign('edit_apply', RC_Uri::url('franchisee/merchant/init', array('type' => 'edit_apply', 'step' => 1, 'mobile' => $mobile)));
+			$this->assign('edit_apply', RC_Uri::url('franchisee/merchant/index', array('type' => 'edit_apply', 'step' => 1, 'mobile' => $mobile)));
 			$this->assign('remove_apply', RC_Uri::url('franchisee/merchant/remove_apply', array('mobile' => $mobile)));
 			
 		} elseif ($step == 4) {
@@ -153,7 +151,7 @@ class merchant extends ecjia_merchant {
 				}
 				$check_log_list = RC_DB::table('store_check_log')->where('store_id', $data['id'])->get();
 				
-				$this->assign('edit_apply', RC_Uri::url('franchisee/merchant/init', array('type' => 'edit_apply', 'step' => 1, 'mobile' => $mobile)));
+				$this->assign('edit_apply', RC_Uri::url('franchisee/merchant/index', array('type' => 'edit_apply', 'step' => 1, 'mobile' => $mobile)));
 				$this->assign('remove_apply', RC_Uri::url('franchisee/merchant/remove_apply', array('mobile' => $mobile)));
 			} else {
 				$data           = RC_DB::table('store_franchisee')->where('contact_mobile', $mobile)->first();
@@ -184,7 +182,7 @@ class merchant extends ecjia_merchant {
 		
 		if ($step != 1) {
 			if (empty($mobile) || $mobile != $_SESSION['temp_mobile']) {
-				$links[] = array('text' => '返回申请入驻', 'href' => RC_Uri::url('franchisee/merchant/init'));
+				$links[] = array('text' => '返回申请入驻', 'href' => RC_Uri::url('franchisee/merchant/index'));
 				$links[] = array('text' => '返回查询审核进度', 'href' => RC_Uri::url('franchisee/merchant/view'));
 				return $this->showmessage('操作失败', ecjia::MSGTYPE_HTML | ecjia::MSGSTAT_ERROR, array('links' => $links));
 			}
@@ -334,8 +332,8 @@ class merchant extends ecjia_merchant {
 					} else {
 						$step = 4;
 					}
-					$links[] = array('text' => '是我的，查看审核进度', 'href' => RC_Uri::url('franchisee/merchant/init&type=view&step='.$step.'&mobile='.$mobile));
-					$links[] = array('text' => '换个手机号重新申请入驻', 'href' => RC_Uri::url('franchisee/merchant/init'));
+					$links[] = array('text' => '是我的，查看审核进度', 'href' => RC_Uri::url('franchisee/merchant/index&type=view&step='.$step.'&mobile='.$mobile));
+					$links[] = array('text' => '换个手机号重新申请入驻', 'href' => RC_Uri::url('franchisee/merchant/index'));
 						
 					return $this->showmessage('该手机号正在申请入驻，请确认该账号是否为你本人所有', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR, array('links' => $links));
 				} elseif ($count_franchisee != 0) {
@@ -375,7 +373,7 @@ class merchant extends ecjia_merchant {
 			
 			$arr['step']   = 2;
 			$arr['mobile'] = $mobile;
-			return $this->showmessage('', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('url' => RC_Uri::url('franchisee/merchant/init', $arr)));
+			return $this->showmessage('', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('url' => RC_Uri::url('franchisee/merchant/index', $arr)));
 			
 		} elseif ($step == 2) {
 			$cat_id 			= !empty($_POST['store_cat'])			? intval($_POST['store_cat'])	  		: 0;			//店铺分类
@@ -570,7 +568,7 @@ class merchant extends ecjia_merchant {
 				    
 				    //log
 				    ecjia_merchant::admin_log('店铺名称为：'.$merchants_name.'，'.'联系号码为：'.$mobile, 'add', 'apply_franchisee');
-					return $this->showmessage('', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('url' => RC_Uri::url('franchisee/merchant/init', array('step' => 3, 'mobile' => $mobile))));
+					return $this->showmessage('', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('url' => RC_Uri::url('franchisee/merchant/index', array('step' => 3, 'mobile' => $mobile))));
 				} else {
 					return $this->showmessage('申请失败', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 				}
@@ -583,7 +581,7 @@ class merchant extends ecjia_merchant {
 			        
 			        ecjia_merchant::admin_log('店铺名称为：'.$merchants_name.'，'.'联系号码为：'.$mobile, 'edit', 'apply_franchisee');
 			        
-			        return $this->showmessage('修改申请成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('franchisee/merchant/init', array('type' => 'edit_view', 'step' => 3, 'mobile' => $mobile))));
+			        return $this->showmessage('修改申请成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('franchisee/merchant/index', array('type' => 'edit_view', 'step' => 3, 'mobile' => $mobile))));
 			    } else {
 			        return $this->showmessage('修改申请失败', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 			    }
@@ -600,7 +598,7 @@ class merchant extends ecjia_merchant {
 		
 		$this->unset_login_info();
 		$this->assign('ur_here', '查询审核进度');
-		$this->assign('action_link', array('href' => RC_Uri::url('franchisee/merchant/init'), 'text' => '申请入驻'));
+		$this->assign('action_link', array('href' => RC_Uri::url('franchisee/merchant/index'), 'text' => '申请入驻'));
 		
 		ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here('查询审核进度'));
 		
@@ -648,7 +646,7 @@ class merchant extends ecjia_merchant {
 					$step = 4;
 				}
 				$this->unset_session();
-				return $this->showmessage('', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('url' => RC_Uri::url('franchisee/merchant/init', array('type' => 'view', 'step' => $step, 'mobile' => $mobile))));
+				return $this->showmessage('', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('url' => RC_Uri::url('franchisee/merchant/index', array('type' => 'view', 'step' => $step, 'mobile' => $mobile))));
 			} else {
 				return $this->showmessage('请输入正确的手机验证码', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 			}
@@ -670,7 +668,7 @@ class merchant extends ecjia_merchant {
 				$this->unset_session(true);
 			}
 			
-			return $this->showmessage('撤销成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('franchisee/merchant/init')));
+			return $this->showmessage('撤销成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('franchisee/merchant/index')));
 		} else {
 			return $this->showmessage('手机号码不正确', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 		}

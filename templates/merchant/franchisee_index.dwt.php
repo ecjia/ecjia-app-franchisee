@@ -1,65 +1,21 @@
 <!-- {extends file="ecjia-merchant.dwt.php"} -->
 
-<!-- {block name="footer"} -->
-<script type="text/javascript">
-	// ecjia.merchant.franchisee.init();
-</script>
+<!-- {block name="meta"} -->
+<title>
+商家入驻 - {ecjia::config('shop_name')}
+</title>
+<!-- {/block} -->
+
+<!-- {block name="title"} -->
+商家入驻 - {ecjia::config('shop_name')}
+<!-- {/block} -->
+
+<!-- {block name="common_header"} -->
+<!-- #BeginLibraryItem "/library/common_nologin_header.lbi" --><!-- #EndLibraryItem -->
 <!-- {/block} -->
 
 <!-- {block name="home-content"} -->
-
-<link rel="shortcut icon" href="favicon.ico" />
-<link rel="stylesheet" type="text/css" href="https://x.dscmall.cn/themes/ecmoban_dsc2017/css/base.css" />
-<link rel="stylesheet" type="text/css" href="https://x.dscmall.cn/themes/ecmoban_dsc2017/css/style.css" />
-<link rel="stylesheet" type="text/css" href="https://x.dscmall.cn/themes/ecmoban_dsc2017/css/iconfont.css" />
-<link rel="stylesheet" type="text/css" href="https://x.dscmall.cn/themes/ecmoban_dsc2017/css/purebox.css" />
-<link rel="stylesheet" type="text/css" href="https://x.dscmall.cn/themes/ecmoban_dsc2017/css/quickLinks.css" />
-
-<style>
-.s-section-cate .item {
-    float: left;
-    width: 335px;
-    margin: 0 0 50px 30px;
-}
-.w.w1200 {
-	width: 1100px;
-}
-.s-section-case .item {
-    float: left;
-    width: 250px;
-    margin-right: 10px;
-    text-align: center;
-    margin-bottom: 80px;
-    margin-left: 14px;
-}
-.s-section-case .item .item-top {
-    width: 250px;
-    height: 200px;
-    position: relative;
-    text-align: center;
-}
-.s-section-case .item .item-top a {
-    width: 250px;
-    height: 200px;
-    display: table-cell;
-    vertical-align: middle;
-}
-.s-section-help .item {
-    float: left;
-    width: 460px;
-    margin: 0 0 30px 40px;
-}
-.nav {
-	z-index: 0;
-	background-color: #3498db;
-	font-size: 14px;
-}
-</style>
-<script src="https://x.dscmall.cn/js/jquery-1.9.1.min.js" type="text/javascript"></script>
-<script src="https://x.dscmall.cn/js/jquery.json.js" type="text/javascript"></script>
-<script src="https://x.dscmall.cn/js/transport_jquery.js" type="text/javascript"></script>
-
-<div class="container settled-container" style="width: 1100px;padding: 0;margin: 0;">
+<div class="container settled-container" style="">
 	<div class="sett-banner" style="background:url(https://x.dscmall.cn/storage/data/afficheimg/1489978643396742470.jpg) center center no-repeat;">
 		<div class="banner-auto" style="width: 1100px;">
 			<div class="s-b-tit">
@@ -68,7 +24,7 @@
 				</div>
 			</div>
 			<div class="s-b-btn">
-				<a href="{RC_Uri::url('franchisee/merchant/init')}" class="im-sett">我要入驻</a>
+				<a href="{RC_Uri::url('franchisee/merchant/index')}" class="im-sett">我要入驻</a>
 				<a href="{RC_Uri::url('franchisee/merchant/view')}" class="view-prog">入驻进度查询</a>
 			</div>
 		</div>
@@ -301,10 +257,6 @@
 		</div>
 	</div>
 </div>
-
-<script src="https://x.dscmall.cn/js/scroll_city.js" type="text/javascript"></script>
-<script type="text/javascript" src="https://x.dscmall.cn/themes/ecmoban_dsc2017/js/dsc-common.js"></script>
-<script type="text/javascript" src="https://x.dscmall.cn/themes/ecmoban_dsc2017/js/jquery.purebox.js"></script>
 
 {if ecjia::config('stats_code')}
 	{stripslashes(ecjia::config('stats_code'))}

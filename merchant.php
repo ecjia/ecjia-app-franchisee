@@ -896,6 +896,7 @@ class merchant extends ecjia_merchant
     {
         $data = RC_DB::table('store_category')
             ->select('cat_id', 'cat_name', 'cat_image')
+            ->where('is_show', 1)
             ->orderBy('cat_id', 'desc')
             ->get();
 

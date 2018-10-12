@@ -64,7 +64,7 @@ input[disabled=disabled],input[disabled],input[readonly=readonly],input[readonly
 
 .s-section-cate .item{float:left;width:300px;margin:0 0 50px 0}
 .s-section-cate .item.last{width:280px}
-.s-section-cate .item i{background:url(../images/sett-cate-icon.png) no-repeat;width:98px;height:85px;display:block;float:left}
+.s-section-cate .item i{background:url(../images/sett-cate-icon.png) no-repeat;width:50px;height:50px;display:block;float:left;margin:17.5px 24px;background-size:100%;}
 .s-section-cate .item span{font-size:14px;color:#8c8c8c;line-height:85px}
 .s-section-cate .item1 i{background-position:0 0}
 .s-section-cate .item2 i{background-position:-102px 0}

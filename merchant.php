@@ -73,6 +73,9 @@ class merchant extends ecjia_merchant {
 	}
 
 	public function init() {
+		$cat_list = $this->get_cat_select_list(true);
+		$this->assign('cat_list', $cat_list);
+
 		$this->display('franchisee_index.dwt');
 	}
 
@@ -770,15 +773,26 @@ class merchant extends ecjia_merchant {
 	/**
 	 * 获取店铺分类表
 	 */
-	private function get_cat_select_list() {
+	private function get_cat_select_list($return_image = false) {
 		$data = RC_DB::table('store_category')
-			->select('cat_id', 'cat_name')
+			->select('cat_id', 'cat_name', 'cat_image')
 			->orderBy('cat_id', 'desc')
 			->get();
+
 		$cat_list = array();
 		if (!empty($data)) {
-			foreach ($data as $row ) {
-				$cat_list[$row['cat_id']] = $row['cat_name'];
+			foreach ($data as $row) {
+				if ($return_image) {
+					if (!empty($row['cat_image'])) {
+						$row['cat_image'] = RC_Upload::upload_url($row['cat_image']);
+					} else {
+						$row['cat_image'] = '';
+					}
+					$cat_list[$row['cat_id']] = array('cat_name' => $row['cat_name'], 'cat_image' => $row['cat_image']);
+				} else {
+					$cat_list[$row['cat_id']] = $row['cat_name'];
+				}
+				
 			}
 		}
 		return $cat_list;

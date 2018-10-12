@@ -85,6 +85,8 @@
 			</div>
 		</div>
 	</div>
+
+	{if $cat_list}
 	<div class="sett-section s-section-cate">
 		<div class="w w1200">
 			<div class="sett-title">
@@ -95,33 +97,17 @@
 				<span class="yw-tit">BUSINESS CATEGORY</span>
 			</div>
 			<div class="sett-warp">
+				<!-- {foreach from=$cat_list item=val} -->
 				<div class="item">
-					<i style="background:url(https://x.dscmall.cn/storage/data/afficheimg/1489978876184880114.png) center center no-repeat;width:98;height:85;display:display;float:left"></i><span>家用电器</span>
+					<i style="background:url({$val.cat_image}) center center no-repeat;background-size:100%;"></i><span>{$val.cat_name}</span>
 				</div>
-				<div class="item">
-					<i style="background:url(https://x.dscmall.cn/storage/data/afficheimg/1489978926013749778.png) center center no-repeat;width:98;height:85;display:display;float:left"></i><span>家居、家具、家装、厨具</span>
-				</div>
-				<div class="item">
-					<i style="background:url(https://x.dscmall.cn/storage/data/afficheimg/1489978893615987749.png) center center no-repeat;width:98;height:85;display:display;float:left"></i><span>手机、数码、通信</span>
-				</div>
-				<div class="item">
-					<i style="background:url(https://x.dscmall.cn/storage/data/afficheimg/1489978972367649095.png) center center no-repeat;width:98;height:85;display:display;float:left"></i><span>男装、女装、内衣</span>
-				</div>
-				<div class="item">
-					<i style="background:url(https://x.dscmall.cn/storage/data/afficheimg/1489978986231187639.png) center center no-repeat;width:98;height:85;display:display;float:left"></i><span>鞋靴、箱包、钟表、奢侈品</span>
-				</div>
-				<div class="item">
-					<i style="background:url(https://x.dscmall.cn/storage/data/afficheimg/1490910332576618152.png) center center no-repeat;width:98;height:85;display:display;float:left"></i><span>个人化妆、清洁用品</span>
-				</div>
-				<div class="item">
-					<i style="background:url(https://x.dscmall.cn/storage/data/afficheimg/1489978943655622374.png) center center no-repeat;width:98;height:85;display:display;float:left"></i><span>休闲、运动、户外健身</span>
-				</div>
-				<div class="item">
-					<i style="background:url(https://x.dscmall.cn/storage/data/afficheimg/1489978957373122314.png) center center no-repeat;width:98;height:85;display:display;float:left"></i><span>食品、酒类、生鲜、特产</span>
-				</div>
+				<!-- {/foreach} -->
+
 			</div>
 		</div>
 	</div>
+	{/if}
+
 	<div class="sett-section s-section-case">
 		<div class="w w1200">
 			<div class="sett-title">

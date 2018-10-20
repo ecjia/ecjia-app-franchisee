@@ -393,6 +393,10 @@ class merchant extends ecjia_merchant
 
             $responsible_person = !empty($_POST['responsible_person']) ? trim($_POST['responsible_person']) : ''; //负责人
             $message = '请输入负责人姓名';
+            if ($validate_type == 2) {
+                $responsible_person = !empty($_POST['company_responsible_person']) ? trim($_POST['company_responsible_person']) : ''; //法定代表人
+                $message = '请输入法定代表人姓名'; 
+            }
 
             $time = RC_Time::gmtime();
             if (empty($email)) {

@@ -521,6 +521,9 @@ class merchant extends ecjia_merchant
             if (empty($merchants_name)) {
                 return $this->showmessage('店铺名称不能为空', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
             } else {
+                if (mb_strlen($merchants_name) > 17) {
+                    return $this->showmessage('店铺名称不能超过17个字符', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+                }
                 if ($type == 'edit_apply') {
                     $count_merchants_name = RC_DB::table('store_preaudit')->where('merchants_name', $merchants_name)->where('contact_mobile', '!=', $mobile)->count();
                 } else {
